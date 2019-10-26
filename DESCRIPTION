@@ -11,3 +11,5 @@ Description: More details about what the package does. See
 License: GPL (>= 2)
 Encoding: UTF-8
 RoxygenNote: 6.1.1
+Suggests: 
+    testthat

@@ -4,10 +4,7 @@
 \alias{GetQueue}
 \title{function GetQueue}
 \usage{
-GetQueue()
-}
-\arguments{
-\item{nothing, }{later maybe ID or district name?}
+GetQueue(office_acronym = "UD_Ochota")
 }
 \description{
 function GetQueue
