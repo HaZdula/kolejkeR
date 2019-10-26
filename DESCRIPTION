@@ -12,7 +12,9 @@ License: GPL (>= 2)
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Suggests: 
-    testthat
+    testthat,
+    spelling
 Imports: 
     curl,
     jsonlite
+Language: en-US

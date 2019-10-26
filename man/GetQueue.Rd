@@ -6,6 +6,9 @@
 \usage{
 GetQueue(office_acronym = "UD_Ochota")
 }
+\arguments{
+\item{office_acronym}{\code{character} acronym of office in Warsaw}
+}
 \description{
 function GetQueue
 }
