@@ -2,6 +2,7 @@ language: r
 cache: packages
 r_check_args: --as-cran 
 r_build_args: --compact-vignettes=both
+warnings_are_errors: false
 
 r:
   - release
