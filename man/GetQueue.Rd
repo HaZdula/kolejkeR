@@ -2,13 +2,28 @@
 % Please edit documentation in R/GetQueue.R
 \name{GetQueue}
 \alias{GetQueue}
-\title{function GetQueue}
+\title{GetQueue}
 \usage{
 GetQueue(office_acronym = "UD_Ochota")
 }
 \arguments{
-\item{office_acronym}{\code{character} acronym of office in Warsaw}
+\item{office_acronym}{\code{character} acronym of office in Warsaw.
+You can get a list of possible values using \code{\link[kolejkeR]{GetAvaibleOfficeAcronyms}} function.}
+}
+\value{
+A \code{list} with one element, a \code{list} result, which contains contains:
+\itemize{
+\item date - a date of request, as a \code{character}.
+\item grupy - a \code{data.frame} with the data concerning the queues.
+\item time - an hour of the request, as a \code{character}.
+}
 }
 \description{
-function GetQueue
+A function, that returns data concerning queues in offices in Warsaw.
+}
+\examples{
+data <- GetQueue(office_acronym = "UD-Bielany")
+grupy <- data[["result"]][["grupy"]]
+# What's the mean time of service?
+mean(as.numeric(grupy[["czasObslugi"]]))
 }
