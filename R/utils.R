@@ -5,7 +5,7 @@ get_district_id <- function(district_name) {
   
 }
 
-get_request_url <- function(url, district_id) {
+get_request_url <- function(district_id) {
   paste0(base_url, "/?id=", district_id)
 }
 
