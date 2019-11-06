@@ -2,3 +2,10 @@
 
 export(GetAvailableOfficeAcronyms)
 export(GetQueue)
+export(get_available_offices)
+export(get_available_queues)
+export(get_current_ticket_number)
+export(get_number_of_people)
+export(get_open_counters)
+export(get_raw_data)
+export(get_waiting_time)

@@ -1,15 +1,21 @@
+library(magrittr)
+
 base_url <- "https://api.um.warszawa.pl/api/action/wsstore_get"
 
 get_district_id <- function(district_name) {
-  office_ids[[district_name]]
-  
+  office_ids$id[grep(district_name, office_ids$office, ignore.case = TRUE)]
 }
 
 get_request_url <- function(district_id) {
   paste0(base_url, "/?id=", district_id)
 }
 
-get_data <- function(request_url) {
+get_data <- function(district_name) {
+  
+  district_id <- get_district_id(district_name)
+  
+  request_url <- get_request_url(district_id)
+  
   jsonlite::fromJSON(request_url)$result$grupy
 }
 
@@ -18,9 +24,9 @@ office_ids <- list(
   UD_Bialoleka = "95fee469-79db-4b4b-9ddc-91d49d1f0f51",
   UD_Bielany = "9c3d5770-57d8-4365-994c-69c5ac4186ee",
   UD_Ochota = "624d7e2a-bf45-48d6-ba79-8b512e662d1c",
-  USC_Falęcka =  "ef5df1a7-882e-4cc5-815b-78768e985724",
+  USC_Falecka =  "ef5df1a7-882e-4cc5-815b-78768e985724",
   UD_Wola = "7ef70889-4eb9-4301-a970-92287db23052",
-  UD_Żoliborz = "831ef31a-b2a3-4cbb-aaa5-cb90fe05ad8c",
+  UD_Zoliborz = "831ef31a-b2a3-4cbb-aaa5-cb90fe05ad8c",
   UD_Bemowo = "b29925fb-edaf-41f5-a2bc-86247501009b",
   UD_Wlochy = "05e32b8b-273b-4684-8dd0-8cd5c04dbb81",
   UD_Ursus = "06396204-e8c1-4139-80c0-a099ee3c448f",
@@ -37,3 +43,7 @@ office_ids <- list(
   USC_Falecka = "06b7c4bd-123d-4ea7-8de1-eb749a56560f",
   USC_Sandomierska = "1add8722-fe63-45aa-95c8-cf7f0ddd1fe0"
 )
+
+office_ids <- office_ids %>% 
+  data.frame() %>%
+  tidyr::gather(key = 'office', value = 'id')

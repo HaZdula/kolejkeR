@@ -72,17 +72,5 @@ GetQueue <- function(office_acronym="UD_Ochota"){
 }
 
 
-get_time_by_group_name <- function(district_name, group_name) {
-  
-  district_id <- get_district_id(district_name)
-  
-  request_url <- get_request_url(district_id)
-  
-  data <- get_data(request_url)
-  
-  minutes <- data[data$nazwaGrupy == group_name, "czasObslugi"]
-  
-  paste("Waiting time for", group_name, "is", minutes, "minutes.") 
-}
 
 
