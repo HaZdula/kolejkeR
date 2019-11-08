@@ -6,6 +6,10 @@
 \usage{
 get_available_queues(office_name)
 }
+\arguments{
+\item{office_name}{\code{character} acronym of office in Warsaw.
+You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.}
+}
 \description{
 get_available_queues
 }

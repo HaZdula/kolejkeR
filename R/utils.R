@@ -47,3 +47,4 @@ office_ids <- list(
 office_ids <- office_ids %>% 
   data.frame() %>%
   tidyr::gather(key = 'office', value = 'id')
+  # Może tidyr::pivot_longer() ?

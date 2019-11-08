@@ -2,10 +2,13 @@
 % Please edit documentation in R/api.R
 \name{get_available_offices}
 \alias{get_available_offices}
-\title{get_available_offices}
+\title{Get available offices}
 \usage{
 get_available_offices()
 }
+\value{
+A \code{character} vector of names of offices in Warsaw
+}
 \description{
-get_available_offices
+A function, that returns available office names to pass down to other methods.
 }

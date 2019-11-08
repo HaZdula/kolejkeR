@@ -6,6 +6,12 @@
 \usage{
 get_waiting_time(office_name, queue_name)
 }
+\arguments{
+\item{office_name}{\code{character} acronym of office in Warsaw.
+You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.}
+
+\item{queue_name}{A \code{character}.}
+}
 \description{
 get_waiting_time
 }

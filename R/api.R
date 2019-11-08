@@ -1,11 +1,30 @@
-#' @title get_raw_data
+#' @title Get raw data
+#' @description A function, that returns all, processed data.
+#' @param office_name \code{character} acronym of office in Warsaw.
+#'  You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.
+#' @return A \code{data.frame} with following columns: 
+#' \itemize{
+#' \item status
+#' \item czasObslugi
+#' \item lp
+#' \item idGrupy
+#' \item liczbaCzynnychStan
+#' \item nazwaGrupy
+#' \item literaGrupy
+#' \item liczbaKlwKolejce
+#' \item aktualnyNumer
+#' }
+#' @seealso \code{\link[kolejkeR]{get_waiting_time}} and others for extracting specific data.
 #' @export 
 get_raw_data <- function(office_name) {
   get_data(office_name)
 }
 
 
-#' @title get_available_offices
+#' @title Get available offices
+#' @description A function, that returns available office names to pass down to other methods.
+#' @return A \code{character} vector of names of offices in Warsaw
+#' @example offices <- get_available_offices()
 #' @export 
 get_available_offices <- function() {
   office_ids$office
@@ -13,6 +32,7 @@ get_available_offices <- function() {
 
 
 #' @title get_available_queues
+#' @inheritParams get_raw_data
 #' @export 
 get_available_queues <- function(office_name) {
   get_data(office_name)$nazwaGrupy
@@ -20,6 +40,8 @@ get_available_queues <- function(office_name) {
 
 
 #' @title get_waiting_time
+#' @inheritParams get_raw_data
+#' @param queue_name A \code{character}.
 #' @export 
 get_waiting_time <- function(office_name, queue_name) {
   

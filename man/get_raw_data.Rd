@@ -2,10 +2,31 @@
 % Please edit documentation in R/api.R
 \name{get_raw_data}
 \alias{get_raw_data}
-\title{get_raw_data}
+\title{Get raw data}
 \usage{
 get_raw_data(office_name)
 }
+\arguments{
+\item{office_name}{\code{character} acronym of office in Warsaw.
+You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.}
+}
+\value{
+A \code{data.frame} with following columns: 
+\itemize{
+\item status
+\item czasObslugi
+\item lp
+\item idGrupy
+\item liczbaCzynnychStan
+\item nazwaGrupy
+\item literaGrupy
+\item liczbaKlwKolejce
+\item aktualnyNumer
+}
+}
 \description{
-get_raw_data
+A function, that returns all, processed data.
+}
+\seealso{
+\code{\link[kolejkeR]{get_waiting_time}} and others for extracting specific data.
 }
