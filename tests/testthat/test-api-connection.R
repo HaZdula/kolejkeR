@@ -27,4 +27,4 @@ httptest::with_mock_api({
 #  for(acronym in GetAvailableOfficeAcronyms()){
 #    expect_error(GetQueue(acronym), NA)
 #  }
-#})  
+#})   
