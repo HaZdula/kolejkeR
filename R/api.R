@@ -83,7 +83,6 @@ get_waiting_time <- function(office_name, queue_name) {
 }
 
 
-#' @title get_open_counters
 #' @inheritParams get_waiting_time
 #' @describeIn get_waiting_time Returns amount of opened encounters.
 #' @return If \code{get_open_encounters} is called: 
@@ -100,7 +99,6 @@ get_open_counters <- function(office_name, queue_name) {
 }
 
 
-#' @title get_current_ticket_number
 #' @inheritParams get_waiting_time
 #' @describeIn get_waiting_time Returns current ticket number.
 #' @return If \code{get_current_number} is called: 
@@ -116,7 +114,6 @@ get_current_ticket_number <- function(office_name, queue_name) {
   paste("Current ticket number is ", ticket_number) 
 }
 
-#' @title get_number_of_people
 #' @inheritParams get_waiting_time
 #' @describeIn get_waiting_time Returns number of people waiting in specified queue.
 #' @return If \code{get_number_of_people} is called: 
