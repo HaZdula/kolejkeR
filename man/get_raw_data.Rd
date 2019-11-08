@@ -8,24 +8,29 @@ get_raw_data(office_name)
 }
 \arguments{
 \item{office_name}{\code{character} acronym of office in Warsaw.
-You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.}
+
+ You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.}
 }
 \value{
 A \code{data.frame} with following columns: 
 \itemize{
-\item status
-\item czasObslugi
-\item lp
-\item idGrupy
-\item liczbaCzynnychStan
-\item nazwaGrupy
-\item literaGrupy
-\item liczbaKlwKolejce
-\item aktualnyNumer
+\item status - either 0 (queue is not operating) or 1 (queue is operating).
+\item czasObslugi - expected time of waiting in queue, in minutes. See also: \code{\link[kolejkeR]{get_waiting_time}}.
+\item lp - ordinal number.
+\item idGrupy - ID of a queue from \code{nazwaGrupy}.
+\item liczbaCzynnychStan - amount of opened counters. See also: \code{\link[kolejkeR]{get_open_counters}}.
+\item nazwaGrupy - a name of a queue. See also: \code{\link[kolejkeR]{get_available_queues}}.
+\item literaGrupy - a single letter symbolizing a queue name from \code{nazwaGrupy}. 
+\item liczbaKlwKolejce - amount of people in queue. See also: \code{\link[kolejkeR]{get_number_of_people}}.
+\item aktualnyNumer - current ticket number. See also: \code{\link[kolejkeR]{get_current_ticket_number}}.
 }
 }
 \description{
-A function, that returns all, processed data.
+A function, that returns all, unprocessed data concerning one of the offices in Warsaw.
+}
+\examples{
+office <- get_available_offices()[1]
+get_raw_data(office)
 }
 \seealso{
 \code{\link[kolejkeR]{get_waiting_time}} and others for extracting specific data.
