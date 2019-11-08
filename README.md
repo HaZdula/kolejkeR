@@ -17,14 +17,19 @@ devtools::install_github("HaZdula/kolejkeR")
 ## Example
 
 
-Let's assume, that you would like to file an application for 500+ programme in Municipal office in Bielany in Warsaw. You wish to find out the average time you need to wait and the amount of people already waiting.
+Let's assume, that you would like to file an application for 500+ programme in municipal office in Bielany in Warsaw. You wish to find out the average time you need to wait and the amount of people already waiting.
 
 ```{r}
 library(kolejkeR)
 library(stringi)
+
 offices <- get_available_offices()
+
+# Find out the exact name of the office
 Bielany_office <- offices[stri_detect_fixed(offices, "Bielany")]
 queues <- get_available_queues(Bielany_office)
+
+# Find the exact name of the queue
 queue500 <- queues[stri_detect_fixed(queues, "500+")]
 
 print(get_waiting_time(Bielany_office, queue500))
