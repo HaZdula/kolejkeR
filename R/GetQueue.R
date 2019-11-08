@@ -24,24 +24,24 @@ office_ids <- list(
   # Pozostałe zwracają "Nieautoryzowany dostęp do danych". Chyba bez API-key się nie obejdzie
 )
 
-#' @title function GetAvailableOfficeAcronyms
-#' @export
+# @title function GetAvailableOfficeAcronyms
+# @export
 GetAvailableOfficeAcronyms <- function(){
   names(office_ids)
 }
 
-#' @title GetQueue
-#' @description A function, that returns data concerning queues in offices in Warsaw.
-#' @param office_acronym \code{character} acronym of office in Warsaw.
-#'  You can get a list of possible values using \code{\link[kolejkeR]{GetAvaibleOfficeAcronyms}} function.
-#' 
-#' @return A \code{list} with one element, a \code{list} result, which contains contains:
-#' \itemize{
-#' \item date - a date of request, as a \code{character}.
-#' \item grupy - a \code{data.frame} with the data concerning the queues.
-#' \item time - an hour of the request, as a \code{character}.
-#' }
-#' @export
+# @title GetQueue
+# @description A function, that returns data concerning queues in offices in Warsaw.
+# @param office_acronym \code{character} acronym of office in Warsaw.
+#  You can get a list of possible values using \code{\link[kolejkeR]{GetAvaibleOfficeAcronyms}} function.
+# 
+# @return A \code{list} with one element, a \code{list} result, which contains contains:
+# \itemize{
+# \item date - a date of request, as a \code{character}.
+# \item grupy - a \code{data.frame} with the data concerning the queues.
+# \item time - an hour of the request, as a \code{character}.
+# }
+# @export
 GetQueue <- function(office_acronym="UD_Ochota"){
   # change to import from/depends
   
