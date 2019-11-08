@@ -2,10 +2,71 @@
 % Please edit documentation in R/api.R
 \name{get_waiting_time}
 \alias{get_waiting_time}
-\title{get_waiting_time}
+\alias{get_open_counters}
+\alias{get_current_ticket_number}
+\alias{get_number_of_people}
+\title{Get specific data}
 \usage{
 get_waiting_time(office_name, queue_name)
+
+get_open_counters(office_name, queue_name)
+
+get_current_ticket_number(office_name, queue_name)
+
+get_number_of_people(office_name, queue_name)
+}
+\arguments{
+\item{office_name}{\code{character} acronym of office in Warsaw.
+
+ You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.}
+
+\item{queue_name}{A \code{character} describing a queue we are interested in.
+
+You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.}
+}
+\value{
+A \code{character} in format depending on the called function.
+
+If \code{get_waiting_time} is called: 
+
+"Waiting time for <queue name> is x minutes".
+
+If \code{get_open_encounters} is called: 
+
+"There are x open encounters for <queue name>".
+
+If \code{get_current_number} is called: 
+
+"Current ticket number is x"
+
+If \code{get_number_of_people} is called: 
+
+"There are x people in <queue name>"
 }
 \description{
-get_waiting_time
+Several functions to get specific data, such as waiting time, open encounters, current ticket number nad
+amount of people in a specific queue in specified office.
+}
+\section{Functions}{
+\itemize{
+\item \code{get_waiting_time}: Returns expected time to be served.
+
+\item \code{get_open_counters}: Returns amount of opened encounters.
+
+\item \code{get_current_ticket_number}: Returns current ticket number.
+
+\item \code{get_number_of_people}: Returns number of people waiting in specified queue.
+}}
+
+\examples{
+office <- get_available_offices()[1]
+queue <- get_available_queues(office)
+
+get_waiting_time(office, queue)
+
+get_open_encounters(office, queue)
+
+get_current_ticket_number(office, queue)
+
+get_number_of_people(office, queue)
 }

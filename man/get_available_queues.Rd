@@ -2,10 +2,26 @@
 % Please edit documentation in R/api.R
 \name{get_available_queues}
 \alias{get_available_queues}
-\title{get_available_queues}
+\title{Get available queues}
 \usage{
 get_available_queues(office_name)
 }
-\description{
-get_available_queues
+\arguments{
+\item{office_name}{\code{character} acronym of office in Warsaw.
+
+ You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.}
 }
+\value{
+A \code{character} vector of names of queues in one of the offices in Warsaw.
+}
+\description{
+A function, that returns available queue names to pass down to other methods.
+}
+\examples{
+office <- get_available_offices()[1]
+get_available_queues(office)
+}
+\seealso{
+Other {getters}: \code{\link{get_available_offices}}
+}
+\concept{{getters}}
