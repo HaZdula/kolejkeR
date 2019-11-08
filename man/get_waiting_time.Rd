@@ -64,7 +64,7 @@ queue <- get_available_queues(office)
 
 get_waiting_time(office, queue)
 
-get_open_encounters(office, queue)
+get_open_counters(office, queue)
 
 get_current_ticket_number(office, queue)
 
