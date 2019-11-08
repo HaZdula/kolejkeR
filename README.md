@@ -19,7 +19,7 @@ devtools::install_github("HaZdula/kolejkeR")
 
 Let's assume, that you would like to file an application for 500+ programme in municipal office in Bielany in Warsaw. You wish to find out the average time you need to wait and the amount of people already waiting.
 
-```{r}
+``` r
 library(kolejkeR)
 library(stringi)
 
