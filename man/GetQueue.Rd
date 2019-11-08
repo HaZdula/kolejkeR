@@ -21,9 +21,3 @@ A \code{list} with one element, a \code{list} result, which contains contains:
 \description{
 A function, that returns data concerning queues in offices in Warsaw.
 }
-\examples{
-data <- GetQueue(office_acronym = "UD-Bielany")
-grupy <- data[["result"]][["grupy"]]
-# What's the mean time of service?
-mean(as.numeric(grupy[["czasObslugi"]]))
-}

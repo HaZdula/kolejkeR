@@ -41,11 +41,6 @@ GetAvailableOfficeAcronyms <- function(){
 #' \item grupy - a \code{data.frame} with the data concerning the queues.
 #' \item time - an hour of the request, as a \code{character}.
 #' }
-#' @examples 
-#' data <- GetQueue(office_acronym = "UD-Bielany")
-#' grupy <- data[["result"]][["grupy"]]
-#' # What's the mean time of service?
-#' mean(as.numeric(grupy[["czasObslugi"]]))
 #' @export
 GetQueue <- function(office_acronym="UD_Ochota"){
   # change to import from/depends

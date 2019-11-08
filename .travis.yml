@@ -32,6 +32,9 @@ notifications:
   email:
     on_success: change
     on_failure: change
+    
+env:
+  CODECOV_TOKEN="7222539e-bf75-4b93-917f-19934a168b9d"
 
 after_success:
     - Rscript -e 'covr::codecov()'
