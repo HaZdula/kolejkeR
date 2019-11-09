@@ -35,6 +35,9 @@ notifications:
     
 env:
   CODECOV_TOKEN="7222539e-bf75-4b93-917f-19934a168b9d"
+  
+r_packages:
+  - covr
 
 after_success:
     - Rscript -e 'covr::codecov()'
