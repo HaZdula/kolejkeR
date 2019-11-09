@@ -14,6 +14,8 @@ get_data <- function(district_name) {
   
   district_id <- get_district_id(district_name)
   
+  if(is.null(district_id)) stop("Unrecognized office acronym!")
+  
   request_url <- get_request_url(district_id)
   
   jsonlite::fromJSON(request_url)$result$grupy
