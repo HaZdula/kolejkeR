@@ -52,12 +52,13 @@ get_available_queues <- function(office_name) {
 #' @title Get specific data
 #' @inheritParams get_raw_data
 #' @param queue_name A \code{character} describing a queue we are interested in.
-#' 
+
 #' You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.
-#' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number nad
+#' @param polish A \code{boolean}. Should the result be in english (\code{FALSE}), or polish (\code{TRUE}) ?
+#' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 #' amount of people in a specific queue in specified office.
 #' @describeIn get_waiting_time Returns expected time to be served.
-#' @return A \code{character} in format depending on the called function.
+#' @return A \code{character} in format depending on the called function and the variable \code{polish}. Below we assume, that \code{polish} variable is default.
 #' 
 #' If \code{get_waiting_time} is called: 
 #' 
@@ -73,13 +74,15 @@ get_available_queues <- function(office_name) {
 #' 
 #' get_number_of_people(office, queue)
 #' @export 
-get_waiting_time <- function(office_name, queue_name) {
+get_waiting_time <- function(office_name, queue_name, polish = FALSE) {
   
   data <- get_data(office_name)
   
   minutes <- data[data$nazwaGrupy == queue_name, "czasObslugi"]
   
-  paste("Waiting time for", queue_name, "is", minutes, "minutes.") 
+  ifelse(polish,
+         paste0("Czas oczekiwania w '", queue_name, "' wynosi ", minutes, " minut", female_endings[as.numeric(minutes) %% 10 + 1], "."),
+         paste("Waiting time for", queue_name, "is", minutes, "minutes."))
 }
 
 
@@ -89,13 +92,15 @@ get_waiting_time <- function(office_name, queue_name) {
 #' 
 #' "There are x open encounters for <queue name>".
 #' @export 
-get_open_counters <- function(office_name, queue_name) {
+get_open_counters <- function(office_name, queue_name, polish = FALSE) {
   
   data <- get_data(office_name)
   
   counters <- data[data$nazwaGrupy == queue_name, "liczbaCzynnychStan"]
   
-  paste("There are ", counters, "open counters for ", queue_name) 
+  ifelse(polish,
+         paste0("Obecnie ", counters, counters_to_string[as.numeric(counters) %% 10 + 1], "'", queue_name,"'."),
+         paste("There are ", counters, "open counters for ", queue_name))
 }
 
 
@@ -105,13 +110,13 @@ get_open_counters <- function(office_name, queue_name) {
 #' 
 #' "Current ticket number is x"
 #' @export 
-get_current_ticket_number <- function(office_name, queue_name) {
+get_current_ticket_number <- function(office_name, queue_name, polish = FALSE) {
   
   data <- get_data(office_name)
-  
   ticket_number <- data[data$nazwaGrupy == queue_name, "aktualnyNumer"]
-  
-  paste("Current ticket number is ", ticket_number) 
+  ifelse(polish,
+         paste0("Obecny numerek w kolejce to: ", ticket_number, "."),
+         paste("Current ticket number is ", ticket_number))
 }
 
 #' @inheritParams get_waiting_time
@@ -120,12 +125,15 @@ get_current_ticket_number <- function(office_name, queue_name) {
 #' 
 #' "There are x people in <queue name>"
 #' @export 
-get_number_of_people <- function(office_name, queue_name) {
+get_number_of_people <- function(office_name, queue_name, polish = FALSE) {
   
   data <- get_data(office_name)
   
   number_of_people <- data[data$nazwaGrupy == queue_name, "liczbaKlwKolejce"]
   
-  paste("There are ", number_of_people, " people in ", queue_name) 
+  ifelse(polish,
+         paste0("W kolejce do '", queue_name, "' czeka ", number_of_people, " osób."),
+         paste("There are ", number_of_people, " people in ", queue_name))
+  
 }
 

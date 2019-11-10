@@ -7,13 +7,13 @@
 \alias{get_number_of_people}
 \title{Get specific data}
 \usage{
-get_waiting_time(office_name, queue_name)
+get_waiting_time(office_name, queue_name, polish = FALSE)
 
-get_open_counters(office_name, queue_name)
+get_open_counters(office_name, queue_name, polish = FALSE)
 
-get_current_ticket_number(office_name, queue_name)
+get_current_ticket_number(office_name, queue_name, polish = FALSE)
 
-get_number_of_people(office_name, queue_name)
+get_number_of_people(office_name, queue_name, polish = FALSE)
 }
 \arguments{
 \item{office_name}{\code{character} acronym of office in Warsaw.
@@ -21,11 +21,12 @@ get_number_of_people(office_name, queue_name)
  You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.}
 
 \item{queue_name}{A \code{character} describing a queue we are interested in.
-
 You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.}
+
+\item{polish}{A \code{boolean}. Should the result be in english (\code{FALSE}), or polish (\code{TRUE}) ?}
 }
 \value{
-A \code{character} in format depending on the called function.
+A \code{character} in format depending on the called function and the variable \code{polish}. Below we assume, that \code{polish} variable is default.
 
 If \code{get_waiting_time} is called: 
 
@@ -44,7 +45,7 @@ If \code{get_number_of_people} is called:
 "There are x people in <queue name>"
 }
 \description{
-Several functions to get specific data, such as waiting time, open encounters, current ticket number nad
+Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 amount of people in a specific queue in specified office.
 }
 \section{Functions}{

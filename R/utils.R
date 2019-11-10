@@ -48,6 +48,13 @@ office_ids <- list(
   USC_Falecka = "06b7c4bd-123d-4ea7-8de1-eb749a56560f",
   USC_Sandomierska = "1add8722-fe63-45aa-95c8-cf7f0ddd1fe0"
 )
+female_endings <- c(rep("", 2), rep("y", 3), rep("", 5))
+counters_to_string <- c(rep(" stanowiska są otwarte w ", 2),
+                        rep(" stanowisk jest otwartych w ", 3),
+                        rep(" stanowiska są otwarte w ", 5))
+# 1 - stanowisk jest otwartych
+# 2-4 - stanowiska są otwarte
+# 5-9 - stanowisk jest otwartych
 
 office_ids <- office_ids %>% 
   data.frame() %>%
