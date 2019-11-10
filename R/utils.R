@@ -3,7 +3,7 @@ library(magrittr)
 base_url <- "https://api.um.warszawa.pl/api/action/wsstore_get"
 
 get_district_id <- function(district_name) {
-  district_id <- office_ids$id[grep(district_name, office_ids$office, ignore.case = TRUE)]
+  district_id <- office_ids[["id"]][grep(district_name, office_ids[["office"]], ignore.case = TRUE)]
   if(length(district_id) == 0){
     district_id <- NULL
   }
@@ -22,7 +22,7 @@ get_data <- function(district_name) {
   
   request_url <- get_request_url(district_id)
   
-  jsonlite::fromJSON(request_url)$result$grupy
+  jsonlite::fromJSON(request_url)[["result"]][["grupy"]]
 }
 
 office_ids <- list(

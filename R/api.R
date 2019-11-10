@@ -32,7 +32,7 @@ get_raw_data <- function(office_name) {
 #' @examples offices <- get_available_offices()
 #' @export 
 get_available_offices <- function() {
-  office_ids$office
+  office_ids[["office"]]
 }
 
 
@@ -45,7 +45,7 @@ get_available_offices <- function() {
 #' get_available_queues(office)
 #' @export 
 get_available_queues <- function(office_name) {
-  get_data(office_name)$nazwaGrupy
+  get_data(office_name)[["nazwaGrupy"]]
 }
 
 
@@ -80,7 +80,7 @@ get_waiting_time <- function(office_name, queue_name, polish = FALSE) {
   
   if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
   
-  minutes <- data[data$nazwaGrupy == queue_name, "czasObslugi"]
+  minutes <- data[data[["nazwaGrupy"]] == queue_name, "czasObslugi"]
   
   ifelse(polish,
          paste0("Czas oczekiwania w '", queue_name, "' wynosi ", minutes, " minut", female_endings[as.numeric(minutes) %% 10 + 1], "."),
@@ -100,7 +100,7 @@ get_open_counters <- function(office_name, queue_name, polish = FALSE) {
   
   if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
   
-  counters <- data[data$nazwaGrupy == queue_name, "liczbaCzynnychStan"]
+  counters <- data[data[["nazwaGrupy"]] == queue_name, "liczbaCzynnychStan"]
   
   ifelse(polish,
          paste0("Obecnie ", counters, counters_to_string[as.numeric(counters) %% 10 + 1], "'", queue_name,"'."),
@@ -118,7 +118,7 @@ get_current_ticket_number <- function(office_name, queue_name, polish = FALSE) {
   
   data <- get_data(office_name)
   if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
-  ticket_number <- data[data$nazwaGrupy == queue_name, "aktualnyNumer"]
+  ticket_number <- data[data[["nazwaGrupy"]] == queue_name, "aktualnyNumer"]
   ifelse(polish,
          paste0("Obecny numerek w kolejce to: ", ticket_number, "."),
          paste("Current ticket number is ", ticket_number))
@@ -136,7 +136,7 @@ get_number_of_people <- function(office_name, queue_name, polish = FALSE) {
   
   if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
   
-  number_of_people <- data[data$nazwaGrupy == queue_name, "liczbaKlwKolejce"]
+  number_of_people <- data[data[["nazwaGrupy"]] == queue_name, "liczbaKlwKolejce"]
   
   ifelse(polish,
          paste0("W kolejce do '", queue_name, "' czeka ", number_of_people, " osób."),
