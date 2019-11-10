@@ -12,10 +12,9 @@ testset <- list(
 
 
 httptest::with_mock_api({
-  test_that("get_available_offices correctly", {
+  test_that("get_available_offices works correctly", {
     result <- get_available_offices()
     expected <- office_ids[["office"]]
-    
     expect_equal(result, expected)
   })
 })
@@ -27,23 +26,11 @@ httptest::with_mock_api({
   })
 })
 
-httptest::with_mock_api({
-  test_that("get_raw_data throws error if incorrect argument is given", {
-    expect_error(get_raw_data("adfgdfg"), "Unrecognized office acronym!")
-  })
-})
-
 
 httptest::with_mock_api({
   test_that("get_available_queues works correctly", {
     sapply(names(testset), function(x){expect_equal(class(get_available_queues(x)),"character")})
     sapply(names(testset), function(x){expect_gte(length(get_available_queues(x)),0)})
-  })
-})
-
-httptest::with_mock_api({
-  test_that("get_available_queues throws error if incorrect argument is given", {
-    expect_error(get_available_queues("adfgdfg"), "Unrecognized office acronym!")
   })
 })
 
@@ -61,12 +48,6 @@ httptest::with_mock_api({
   })
 })
 
-httptest::with_mock_api({
-  test_that("get_waiting_time throws error if incorrect argument is given", {
-    expect_error(get_waiting_time("adfgdfg"), "Unrecognized office acronym!")
-  })
-})
-
 
 httptest::with_mock_api({
   test_that("get_open_counters works correctly", {
@@ -78,12 +59,6 @@ httptest::with_mock_api({
       n_counters <- msg_vec[grep("[0-9]", msg_vec)[1]]
       expect_true(as.numeric(n_counters) >= 0)
     })
-  })
-})
-
-httptest::with_mock_api({
-  test_that("get_open_counters throws error if incorrect argument is given", {
-    expect_error(get_open_counters("adfgdfg"), "Unrecognized office acronym!")
   })
 })
 
@@ -99,11 +74,5 @@ httptest::with_mock_api({
       n_ticket <- msg_vec[tail(grep("[0-9]", msg_vec), n=1)]
       expect_true(as.numeric(n_ticket) >= 0)
     })
-  })
-})
-
-httptest::with_mock_api({
-  test_that("get_current_ticket_number throws error if incorrect argument is given", {
-    expect_error(get_number_of_people("adfgdfg", "Kasa"), "Unrecognized office acronym!")
   })
 })
