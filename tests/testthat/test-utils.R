@@ -35,7 +35,7 @@ httptest::with_mock_api({
 httptest::with_mock_api({
   test_that("get_district_id returns null if office name is unrecognized", {
     expect_null(get_district_id("No_such_office"))
-    expect_null(get_district_id(""))
+    expect_null(get_district_id("adfg"))
   })
 })
 
