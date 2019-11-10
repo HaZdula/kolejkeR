@@ -26,11 +26,11 @@ library(stringi)
 offices <- get_available_offices()
 
 # Find out the exact name of the office
-Bielany_office <- offices[stri_detect_fixed(offices, "Bielany")]
+Bielany_office <- offices[stri_detect_fixed(offices, "Bielany")][1]
 queues <- get_available_queues(Bielany_office)
 
 # Find the exact name of the queue
-queue500 <- queues[stri_detect_fixed(queues, "500+")]
+queue500 <- queues[stri_detect_fixed(queues, "500+")][1]
 
 print(get_waiting_time(Bielany_office, queue500))
 print(get_number_of_people(Bielany_office, queue500))
