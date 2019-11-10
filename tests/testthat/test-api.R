@@ -45,6 +45,15 @@ httptest::with_mock_api({
   })
 })
 
+httptest::with_mock_api({
+  test_that("get_waiting_time works correctly", {
+    sapply(names(testset), function(x){
+      queue_name <- get_available_queues(x)[1]
+      expect_equal(class(get_waiting_time(x, queue_name)),"character")
+      #tutaj grepa na wyciagniecie liczby
+      })
+  })
+})
 
 
 httptest::with_mock_api({
