@@ -1,3 +1,5 @@
+context("Api error tests")
+
 testset <- list(
   USC_Andersa = "5d2e698a-9c31-456b-8452-7ce33e7deb94",
   UD_Bialoleka = "95fee469-79db-4b4b-9ddc-91d49d1f0f51",
