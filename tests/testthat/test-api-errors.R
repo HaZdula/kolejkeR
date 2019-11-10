@@ -53,7 +53,7 @@ httptest::with_mock_api({
 
 httptest::with_mock_api({
   test_that("get_current_ticket_number throws error if incorrect office is given", {
-    expect_error(get_number_of_people("wRonGQnamE", "Kasa"), "Unrecognized office acronym!")
+    expect_error(get_current_ticket_number("wRonGQnamE", "Kasa"), "Unrecognized office acronym!")
   })
 })
 
