@@ -58,6 +58,14 @@ httptest::with_mock_api({
 })
 
 httptest::with_mock_api({
+  test_that("get_current_ticket_number throws error if incorrect queue is given", {
+    sapply(names(testset), function(x){
+      expect_error(get_current_ticket_number(x, "wRonGQnamE"), "Unrecognized queue name!")
+    })
+  })
+})
+
+httptest::with_mock_api({
   test_that("get_number_of_people throws error if incorrect queue is given", {
     sapply(names(testset), function(x){
       expect_error(get_number_of_people(x, "wRonGQnamE"), "Unrecognized queue name!")
