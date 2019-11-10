@@ -128,3 +128,4 @@ get_number_of_people <- function(office_name, queue_name) {
   
   paste("There are ", number_of_people, " people in ", queue_name) 
 }
+
