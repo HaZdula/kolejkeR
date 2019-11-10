@@ -20,6 +20,7 @@ httptest::with_mock_api({
   })
 })
 
+
 httptest::with_mock_api({
   test_that("get_raw_data returns data.frame", {
     sapply(names(testset), function(x){expect_equal(class(get_raw_data(x)),"data.frame")})
@@ -31,6 +32,7 @@ httptest::with_mock_api({
     expect_error(get_raw_data("adfgdfg"), "Unrecognized office acronym!")
   })
 })
+
 
 httptest::with_mock_api({
   test_that("get_available_queues works correctly", {
@@ -45,34 +47,63 @@ httptest::with_mock_api({
   })
 })
 
+
 httptest::with_mock_api({
   test_that("get_waiting_time works correctly", {
     sapply(names(testset), function(x){
       queue_name <- get_available_queues(x)[1]
-      expect_equal(class(get_waiting_time(x, queue_name)),"character")
-      #tutaj grepa na wyciagniecie liczby
-      })
+      msg <- get_waiting_time(x, queue_name)
+      expect_equal(class(msg),"character")
+      msg_vec <- unlist(strsplit(msg, " "))
+      waitng_time <- msg_vec[tail(grep("[0-9]", msg_vec),n=1)]
+      expect_true(as.numeric(waitng_time) >= 0)
+    })
+  })
+})
+
+httptest::with_mock_api({
+  test_that("get_waiting_time throws error if incorrect argument is given", {
+    expect_error(get_waiting_time("adfgdfg"), "Unrecognized office acronym!")
   })
 })
 
 
 httptest::with_mock_api({
-    test_that("get_waiting_time throws error if incorrect argument is given", {
-      expect_error(get_waiting_time("adfgdfg"), "Unrecognized office acronym!")
-      sapply(names(testset), function(x) expect_error(get_waiting_time(x, "wRonGQnamE"), "Unrecognized queue name!"))
+  test_that("get_open_counters works correctly", {
+    sapply(names(testset), function(x){
+      queue_name <- get_available_queues(x)[1]
+      msg <- get_open_counters(x, queue_name)
+      expect_equal(class(msg),"character")
+      msg_vec <- unlist(strsplit(msg, " "))
+      n_counters <- msg_vec[grep("[0-9]", msg_vec)[1]]
+      expect_true(as.numeric(n_counters) >= 0)
     })
   })
+})
 
 httptest::with_mock_api({
   test_that("get_open_counters throws error if incorrect argument is given", {
     expect_error(get_open_counters("adfgdfg"), "Unrecognized office acronym!")
-    sapply(names(testset), function(x) expect_error(get_waiting_time(x, "wRonGQnamE"), "Unrecognized queue name!"))
+  })
+})
+
+
+# this may not work in opening hours
+httptest::with_mock_api({
+  test_that("get_current_ticket_number works correctly", {
+    sapply(names(testset), function(x){
+      queue_name <- get_available_queues(x)[1]
+      msg <- get_current_ticket_number(x, queue_name)
+      expect_equal(class(msg),"character")
+      msg_vec <- unlist(strsplit(msg, " "))
+      n_ticket <- msg_vec[tail(grep("[0-9]", msg_vec), n=1)]
+      expect_true(as.numeric(n_ticket) >= 0)
+    })
   })
 })
 
 httptest::with_mock_api({
   test_that("get_current_ticket_number throws error if incorrect argument is given", {
     expect_error(get_number_of_people("adfgdfg", "Kasa"), "Unrecognized office acronym!")
-    sapply(names(testset), function(x) expect_error(get_waiting_time(x, "wRonGQnamE"), "Unrecognized queue name!"))
   })
 })

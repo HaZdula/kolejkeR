@@ -119,6 +119,7 @@ get_current_ticket_number <- function(office_name, queue_name, polish = FALSE) {
   data <- get_data(office_name)
   if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
   ticket_number <- data[data[["nazwaGrupy"]] == queue_name, "aktualnyNumer"]
+  if(ticket_number == ""){ticket_number = 0}
   ifelse(polish,
          paste0("Obecny numerek w kolejce to: ", ticket_number, "."),
          paste("Current ticket number is ", ticket_number))
