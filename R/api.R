@@ -78,6 +78,8 @@ get_waiting_time <- function(office_name, queue_name, polish = FALSE) {
   
   data <- get_data(office_name)
   
+  if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
+  
   minutes <- data[data$nazwaGrupy == queue_name, "czasObslugi"]
   
   ifelse(polish,
@@ -96,6 +98,8 @@ get_open_counters <- function(office_name, queue_name, polish = FALSE) {
   
   data <- get_data(office_name)
   
+  if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
+  
   counters <- data[data$nazwaGrupy == queue_name, "liczbaCzynnychStan"]
   
   ifelse(polish,
@@ -113,6 +117,7 @@ get_open_counters <- function(office_name, queue_name, polish = FALSE) {
 get_current_ticket_number <- function(office_name, queue_name, polish = FALSE) {
   
   data <- get_data(office_name)
+  if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
   ticket_number <- data[data$nazwaGrupy == queue_name, "aktualnyNumer"]
   ifelse(polish,
          paste0("Obecny numerek w kolejce to: ", ticket_number, "."),
@@ -128,6 +133,8 @@ get_current_ticket_number <- function(office_name, queue_name, polish = FALSE) {
 get_number_of_people <- function(office_name, queue_name, polish = FALSE) {
   
   data <- get_data(office_name)
+  
+  if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
   
   number_of_people <- data[data$nazwaGrupy == queue_name, "liczbaKlwKolejce"]
   
