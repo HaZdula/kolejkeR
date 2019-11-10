@@ -76,3 +76,17 @@ httptest::with_mock_api({
     })
   })
 })
+
+
+httptest::with_mock_api({
+  test_that("get_number_of_people works correctly", {
+    sapply(names(testset), function(x){
+      queue_name <- get_available_queues(x)[1]
+      msg <- get_number_of_people(x, queue_name)
+      expect_equal(class(msg),"character")
+      msg_vec <- unlist(strsplit(msg, " "))
+      n_ticket <- msg_vec[grep("[0-9]", msg_vec)[1]]
+      expect_true(as.numeric(n_ticket) >= 0)
+    })
+  })
+})
