@@ -59,17 +59,20 @@ httptest::with_mock_api({
 httptest::with_mock_api({
     test_that("get_waiting_time throws error if incorrect argument is given", {
       expect_error(get_waiting_time("adfgdfg"), "Unrecognized office acronym!")
+      sapply(names(testset), function(x) expect_error(get_waiting_time(x, "wRonGQnamE"), "Unrecognized queue name!"))
     })
   })
 
 httptest::with_mock_api({
   test_that("get_open_counters throws error if incorrect argument is given", {
     expect_error(get_open_counters("adfgdfg"), "Unrecognized office acronym!")
+    sapply(names(testset), function(x) expect_error(get_waiting_time(x, "wRonGQnamE"), "Unrecognized queue name!"))
   })
 })
 
 httptest::with_mock_api({
   test_that("get_current_ticket_number throws error if incorrect argument is given", {
     expect_error(get_number_of_people("adfgdfg", "Kasa"), "Unrecognized office acronym!")
+    sapply(names(testset), function(x) expect_error(get_waiting_time(x, "wRonGQnamE"), "Unrecognized queue name!"))
   })
 })
