@@ -44,3 +44,23 @@ httptest::with_mock_api({
     expect_error(get_available_queues("adfgdfg"), "Unrecognized office acronym!")
   })
 })
+
+
+
+httptest::with_mock_api({
+    test_that("get_waiting_time throws error if incorrect argument is given", {
+      expect_error(get_waiting_time("adfgdfg"), "Unrecognized office acronym!")
+    })
+  })
+
+httptest::with_mock_api({
+  test_that("get_open_counters throws error if incorrect argument is given", {
+    expect_error(get_open_counters("adfgdfg"), "Unrecognized office acronym!")
+  })
+})
+
+httptest::with_mock_api({
+  test_that("get_current_ticket_number throws error if incorrect argument is given", {
+    expect_error(get_number_of_people("adfgdfg", "Kasa"), "Unrecognized office acronym!")
+  })
+})
