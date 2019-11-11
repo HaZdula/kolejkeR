@@ -49,12 +49,16 @@ office_ids <- list(
   USC_Sandomierska = "1add8722-fe63-45aa-95c8-cf7f0ddd1fe0"
 )
 female_endings <- c(rep("", 2), rep("y", 3), rep("", 5))
-counters_to_string <- c(rep(" stanowiska są otwarte w ", 2),
-                        rep(" stanowisk jest otwartych w ", 3),
-                        rep(" stanowiska są otwarte w ", 5))
-# 1 - stanowisk jest otwartych
-# 2-4 - stanowiska są otwarte
-# 5-9 - stanowisk jest otwartych
+counters_to_string <- function() {
+  c(texts[["pl"]][["0_5-9_checkouts_inflection"]],
+    texts[["pl"]][["1_checkouts_inflection"]],
+    rep(texts[["pl"]][["2-3_checkouts_inflection"]],3),
+    rep(texts[["pl"]][["0_5-9_checkouts_inflection"]],5))
+}
+# 1 - stanowisk jest otwartych w
+# 2 - stanowisko jest otwarte w
+# 3-5 - stanowiska są otwarte w
+# 6-10 - stanowisk jest otwartych w
 
 office_ids <- office_ids %>% 
   data.frame() %>%

@@ -11,6 +11,7 @@ Description: More details about what the package does. See
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 6.1.1
+Depends: R (>= 2.10)
 Suggests: 
     testthat,
     spelling,
@@ -21,6 +22,7 @@ Imports:
     jsonlite,
     magrittr,
     tidyr,
-    httptest
+    httptest,
+    glue
 Language: en-US
 VignetteBuilder: knitr

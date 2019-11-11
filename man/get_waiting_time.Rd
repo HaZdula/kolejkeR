@@ -7,13 +7,17 @@
 \alias{get_number_of_people}
 \title{Get specific data}
 \usage{
-get_waiting_time(office_name, queue_name, polish = FALSE)
+get_waiting_time(office_name, queue_name, language = "en",
+  verbose = TRUE)
 
-get_open_counters(office_name, queue_name, polish = FALSE)
+get_open_counters(office_name, queue_name, language = "en",
+  verbose = TRUE)
 
-get_current_ticket_number(office_name, queue_name, polish = FALSE)
+get_current_ticket_number(office_name, queue_name, language = "en",
+  verbose = TRUE)
 
-get_number_of_people(office_name, queue_name, polish = FALSE)
+get_number_of_people(office_name, queue_name, language = "en",
+  verbose = TRUE)
 }
 \arguments{
 \item{office_name}{\code{character} acronym of office in Warsaw.
@@ -23,7 +27,9 @@ get_number_of_people(office_name, queue_name, polish = FALSE)
 \item{queue_name}{A \code{character} describing a queue we are interested in.
 You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.}
 
-\item{polish}{A \code{boolean}. Should the result be in english (\code{FALSE}), or polish (\code{TRUE}) ?}
+\item{language}{A \code{character}. Only two languages supported english (\code{"en"}) and polish (\code{"pl"}).}
+
+\item{verbose}{A \code{boolean}. Should print result in user friendly format?}
 }
 \value{
 A \code{character} in format depending on the called function and the variable \code{polish}. Below we assume, that \code{polish} variable is default.
