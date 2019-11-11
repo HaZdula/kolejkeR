@@ -64,8 +64,36 @@
 <div id="kolejker" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#kolejker" class="anchor"></a>kolejkeR</h1></div>
-<p>API for “Otwarte dane po warszawsku”</p>
-<p><a href="https://travis-ci.org/sowiks2711/RPackage"><img src="https://travis-ci.org/sowiks2711/RPackage.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/github/sowiks2711/RPackage?branch=master"><img src="https://codecov.io/gh/sowiks2711/RPackage/branch/master/graph/badge.svg" alt="Coverage status"></a></p>
+<p>The kolejkeR package is an R wrapper for the Otwarte dane po warszawsku (Open Warsaw Data) API. Project for Advanced R classes at the Warsaw University of Technology.</p>
+<p><a href="https://travis-ci.org/HaZdula/kolejkeR"><img src="https://travis-ci.org/HaZdula/kolejkeR.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/gh/HaZdula/kolejkeR?branch=master"><img src="https://codecov.io/gh/HaZdula/kolejkeR/branch/master/graph/badge.svg" alt="Coverage status"></a></p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># install.packages("devtools")</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"HaZdula/kolejkeR"</span>)</span></code></pre></div>
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
+<p>Let’s assume, that you would like to file an application for 500+ programme in municipal office in Bielany in Warsaw. You wish to find out the average time you need to wait and the amount of people already waiting.</p>
+<pre class="{r}"><code><a href="https://rdrr.io/r/base/library.html">library(kolejkeR)
+library(stringi)
+
+offices &lt;- get_available_offices()
+
+# Find out the exact name of the office
+Bielany_office &lt;- offices[stri_detect_fixed(offices, "Bielany")]
+queues &lt;- get_available_queues(Bielany_office)
+
+# Find the exact name of the queue
+queue500 &lt;- queues[stri_detect_fixed(queues, "500+")]
+
+print(get_waiting_time(Bielany_office, queue500))
+print(get_number_of_people(Bielany_office, queue500))
+</a></code></pre>
+<p>Now you can go to the municipal office with a big smile on your face.</p>
+</div>
 </div>
   </div>
 
@@ -73,7 +101,9 @@
     <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li>GPL (&gt;= 2)</li>
+<li>
+<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
 <div class="developers">

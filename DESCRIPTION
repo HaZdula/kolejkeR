@@ -8,13 +8,19 @@ Maintainer: Your Name <your@email.com>
 Description: More details about what the package does. See
           <http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file>
           for details on how to write this part.
-License: GPL (>= 2)
+License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Suggests: 
     testthat,
-    spelling
+    spelling,
+    knitr,
+    rmarkdown
 Imports: 
     curl,
-    jsonlite
+    jsonlite,
+    magrittr,
+    tidyr,
+    httptest
 Language: en-US
+VignetteBuilder: knitr
