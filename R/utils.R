@@ -25,7 +25,7 @@ get_data <- function(district_name) {
   jsonlite::fromJSON(request_url)[["result"]][["grupy"]]
 }
 
-office_ids <- list(
+office_ids_list <- list(
   USC_Andersa = "5d2e698a-9c31-456b-8452-7ce33e7deb94",
   UD_Bialoleka = "95fee469-79db-4b4b-9ddc-91d49d1f0f51",
   UD_Bielany = "9c3d5770-57d8-4365-994c-69c5ac4186ee",
@@ -60,7 +60,7 @@ counters_to_string <- function() {
 # 3-5 - stanowiska są otwarte w
 # 6-10 - stanowisk jest otwartych w
 
-office_ids <- office_ids %>% 
+office_ids <- office_ids_list %>% 
   data.frame() %>%
   tidyr::gather(key = 'office', value = 'id')
   # Może tidyr::pivot_longer() ?

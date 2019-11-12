@@ -31,8 +31,9 @@ httptest::with_mock_api({
 
 httptest::with_mock_api({
   test_that("get_available_queues works correctly", {
-    sapply(names(testset), function(x){expect_equal(class(get_available_queues(x)),"character")})
-    sapply(names(testset), function(x){expect_gte(length(get_available_queues(x)),0)})
+    sapply(names(testset), function(x){
+      expect_equal(class(get_available_queues(x)),"character")})
+      sapply(names(testset), function(x){expect_gte(length(get_available_queues(x)),0)})
   })
 })
 
@@ -55,7 +56,7 @@ httptest::with_mock_api({
   test_that("get_open_counters works correctly", {
     sapply(names(testset), function(x){
       queue_name <- get_available_queues(x)[1]
-      msg <- get_open_counters(x, queue_name)
+      msg <- get_open_counters_verbose(x, queue_name)
       expect_equal(class(msg),"character")
       msg_vec <- unlist(strsplit(msg, " "))
       n_counters <- msg_vec[grep("[0-9]", msg_vec)[1]]
@@ -70,7 +71,7 @@ httptest::with_mock_api({
   test_that("get_current_ticket_number works correctly", {
     sapply(names(testset), function(x){
       queue_name <- get_available_queues(x)[1]
-      msg <- get_current_ticket_number(x, queue_name)
+      msg <- get_current_ticket_number_verbose(x, queue_name)
       expect_equal(class(msg),"character")
       msg_vec <- unlist(strsplit(msg, " "))
       n_ticket <- msg_vec[tail(grep("[0-9]", msg_vec), n=1)]
@@ -84,7 +85,7 @@ httptest::with_mock_api({
   test_that("get_number_of_people works correctly", {
     sapply(names(testset), function(x){
       queue_name <- get_available_queues(x)[1]
-      msg <- get_number_of_people(x, queue_name)
+      msg <- get_number_of_people_verbose(x, queue_name)
       expect_equal(class(msg),"character")
       msg_vec <- unlist(strsplit(msg, " "))
       n_ticket <- msg_vec[grep("[0-9]", msg_vec)[1]]
