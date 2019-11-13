@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get specific data — get_waiting_time • kolejkeR</title>
+<title>Get specific data directly — get_waiting_time • kolejkeR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Get specific data — get_waiting_time" />
+<meta property="og:title" content="Get specific data directly — get_waiting_time" />
 
-<meta property="og:description" content="Several functions to get specific data, such as waiting time, open encounters, current ticket number nad
+<meta property="og:description" content="Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 amount of people in a specific queue in specified office." />
 <meta name="twitter:card" content="summary" />
 
@@ -82,6 +82,18 @@ amount of people in a specific queue in specified office." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/kolejkeR-vignette.html">kolejkeR-vignette</a>
+    </li>
+  </ul>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -99,14 +111,14 @@ amount of people in a specific queue in specified office." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get specific data</h1>
+    <h1>Get specific data directly</h1>
     
     <div class="hidden name"><code>get_waiting_time.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Several functions to get specific data, such as waiting time, open encounters, current ticket number nad
+    <p>Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 amount of people in a specific queue in specified office.</p>
     
     </div>
@@ -129,22 +141,18 @@ amount of people in a specific queue in specified office.</p>
     </tr>
     <tr>
       <th>queue_name</th>
-      <td><p>A <code>character</code> describing a queue we are interested in.</p>
-<p>You can get a list of possible values using <code><a href='get_available_queues.html'>get_available_queues</a></code> function.</p></td>
+      <td><p>A <code>character</code> describing a queue we are interested in.
+You can get a list of possible values using <code><a href='get_available_queues.html'>get_available_queues</a></code> function.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>character</code> in format depending on the called function.</p>
-<p>If <code>get_waiting_time</code> is called:</p>
-<p>"Waiting time for &lt;queue name&gt; is x minutes".</p>
-<p>If <code>get_open_encounters</code> is called:</p>
-<p>"There are x open encounters for &lt;queue name&gt;".</p>
-<p>If <code>get_current_number</code> is called:</p>
-<p>"Current ticket number is x"</p>
-<p>If <code>get_number_of_people</code> is called:</p>
-<p>"There are x people in &lt;queue name&gt;"</p>
+    <p>A <code>character</code> vector of length 1, containing the information dependent on the called function.</p>
+<p>If <code>get_waiting_time</code> is called: Estimated time of waiting in the queue, in minutes.</p>
+<p>If <code>get_open_encounters</code> is called - the amount of open encounters servicing the queue.</p>
+<p>If <code>get_current_ticket_number</code> is called - the current ticket identifier.</p>
+<p>If <code>get_number_of_people</code> is called - the amount of people waiting in the queue.</p>
     
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
@@ -152,82 +160,24 @@ amount of people in a specific queue in specified office.</p>
 <ul>
 <li><p><code>get_waiting_time</code>: Returns expected time to be served.</p></li>
 <li><p><code>get_open_counters</code>: Returns amount of opened encounters.</p></li>
-<li><p><code>get_current_ticket_number</code>: Returns current ticket number.</p></li>
-<li><p><code>get_number_of_people</code>: Returns number of people waiting in specified queue.</p></li>
+<li><p><code>get_current_ticket_number</code>: Returns the identifier of the current ticket.</p></li>
+<li><p><code>get_number_of_people</code>: Returns amount of people waiting in the queue.</p></li>
 </ul>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='get_waiting_time_verbose.html'>get_waiting_time_verbose</a></code> and others for a more verbose output.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>office</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_available_offices.html'>get_available_offices</a></span>()[<span class='fl'>1</span>]
 <span class='no'>queue</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_available_queues.html'>get_available_queues</a></span>(<span class='no'>office</span>)
 
-<span class='fu'>get_waiting_time</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] "Waiting time for T: Odbiór odpisu po sprostowaniu lub uzupełnieniu is 10 minutes."            
-#&gt;  [2] "Waiting time for Z: Zgłoszenie zgonu na podstawie karty zgonu is 10 minutes."                 
-#&gt;  [3] "Waiting time for P: Oświadczenie o powrocie do nazwiska noszonego przed ślubem is 10 minutes."
-#&gt;  [4] "Waiting time for S: Sprostowanie lub uzupełnienie aktu is 10 minutes."                        
-#&gt;  [5] "Waiting time for I: Zmiana imienia lub nazwiska w trybie administracyjnym is 10 minutes."     
-#&gt;  [6] "Waiting time for Z: Sprostowanie lub uzupełnienie aktu zgonu is 10 minutes."                  
-#&gt;  [7] "Waiting time for J: Zgłoszenie jubileuszu pożycia małżeńskiego is 10 minutes."                
-#&gt;  [8] "Waiting time for Sprostowanie lub uzupełnienie aktów is 10 minutes."                          
-#&gt;  [9] "Waiting time for D: Zmiana imienia dziecka is 10 minutes."                                    
-#&gt; [10] "Waiting time for M: Sprostowanie lub uzupełnienie aktu małżeństwa is 10 minutes."             
-#&gt; [11] "Waiting time for M: Złożenie dokumentów i wydawanie zaświadczeń is 10 minutes."               
-#&gt; [12] "Waiting time for A: Rejestracja noworodków is 10 minutes."                                    
-#&gt; [13] "Waiting time for T: Rejestracja na podstawie zagranicznych dokumentów is 10 minutes."         
-#&gt; [14] "Waiting time for T: Odbiór odpisu po rejestracji  zagranicznych dokumentów is 10 minutes."    
-#&gt; [15] "Waiting time for W: Złożenie wniosku oraz odbiór zamówionych odpisów is 10 minutes."          
-#&gt; [16] "Waiting time for X: Kasa is 60 minutes."                                                      
-#&gt; [17] "Waiting time for C: Wydanie zaświadczenia o stanie cywilnym is 60 minutes."                   
-#&gt; [18] "Waiting time for O: Uznanie ojcostwa przed urodzeniem się dziecka is 10 minutes."             
-#&gt; [19] "Waiting time for T: Sprostowanie lub uzupełnienie aktu is 10 minutes."                        </div><div class='input'>
-<span class='fu'>get_open_counters</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] "There are  0 open counters for  T: Odbiór odpisu po sprostowaniu lub uzupełnieniu"            
-#&gt;  [2] "There are  0 open counters for  Z: Zgłoszenie zgonu na podstawie karty zgonu"                 
-#&gt;  [3] "There are  0 open counters for  P: Oświadczenie o powrocie do nazwiska noszonego przed ślubem"
-#&gt;  [4] "There are  0 open counters for  S: Sprostowanie lub uzupełnienie aktu"                        
-#&gt;  [5] "There are  0 open counters for  I: Zmiana imienia lub nazwiska w trybie administracyjnym"     
-#&gt;  [6] "There are  0 open counters for  Z: Sprostowanie lub uzupełnienie aktu zgonu"                  
-#&gt;  [7] "There are  0 open counters for  J: Zgłoszenie jubileuszu pożycia małżeńskiego"                
-#&gt;  [8] "There are  0 open counters for  Sprostowanie lub uzupełnienie aktów"                          
-#&gt;  [9] "There are  0 open counters for  D: Zmiana imienia dziecka"                                    
-#&gt; [10] "There are  0 open counters for  M: Sprostowanie lub uzupełnienie aktu małżeństwa"             
-#&gt; [11] "There are  0 open counters for  M: Złożenie dokumentów i wydawanie zaświadczeń"               
-#&gt; [12] "There are  0 open counters for  A: Rejestracja noworodków"                                    
-#&gt; [13] "There are  0 open counters for  T: Rejestracja na podstawie zagranicznych dokumentów"         
-#&gt; [14] "There are  0 open counters for  T: Odbiór odpisu po rejestracji  zagranicznych dokumentów"    
-#&gt; [15] "There are  0 open counters for  W: Złożenie wniosku oraz odbiór zamówionych odpisów"          
-#&gt; [16] "There are  0 open counters for  X: Kasa"                                                      
-#&gt; [17] "There are  0 open counters for  C: Wydanie zaświadczenia o stanie cywilnym"                   
-#&gt; [18] "There are  0 open counters for  O: Uznanie ojcostwa przed urodzeniem się dziecka"             
-#&gt; [19] "There are  0 open counters for  T: Sprostowanie lub uzupełnienie aktu"                        </div><div class='input'>
-<span class='fu'>get_current_ticket_number</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] "Current ticket number is  "     "Current ticket number is  Z603"
-#&gt;  [3] "Current ticket number is  P601" "Current ticket number is  "    
-#&gt;  [5] "Current ticket number is  I016" "Current ticket number is  "    
-#&gt;  [7] "Current ticket number is  "     "Current ticket number is  "    
-#&gt;  [9] "Current ticket number is  "     "Current ticket number is  "    
-#&gt; [11] "Current ticket number is  M015" "Current ticket number is  "    
-#&gt; [13] "Current ticket number is  "     "Current ticket number is  "    
-#&gt; [15] "Current ticket number is  W091" "Current ticket number is  "    
-#&gt; [17] "Current ticket number is  "     "Current ticket number is  "    
-#&gt; [19] "Current ticket number is  "    </div><div class='input'>
-<span class='fu'>get_number_of_people</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] "There are  0  people in  T: Odbiór odpisu po sprostowaniu lub uzupełnieniu"            
-#&gt;  [2] "There are  0  people in  Z: Zgłoszenie zgonu na podstawie karty zgonu"                 
-#&gt;  [3] "There are  0  people in  P: Oświadczenie o powrocie do nazwiska noszonego przed ślubem"
-#&gt;  [4] "There are  0  people in  S: Sprostowanie lub uzupełnienie aktu"                        
-#&gt;  [5] "There are  0  people in  I: Zmiana imienia lub nazwiska w trybie administracyjnym"     
-#&gt;  [6] "There are  0  people in  Z: Sprostowanie lub uzupełnienie aktu zgonu"                  
-#&gt;  [7] "There are  0  people in  J: Zgłoszenie jubileuszu pożycia małżeńskiego"                
-#&gt;  [8] "There are  0  people in  Sprostowanie lub uzupełnienie aktów"                          
-#&gt;  [9] "There are  0  people in  D: Zmiana imienia dziecka"                                    
-#&gt; [10] "There are  0  people in  M: Sprostowanie lub uzupełnienie aktu małżeństwa"             
-#&gt; [11] "There are  0  people in  M: Złożenie dokumentów i wydawanie zaświadczeń"               
-#&gt; [12] "There are  0  people in  A: Rejestracja noworodków"                                    
-#&gt; [13] "There are  0  people in  T: Rejestracja na podstawie zagranicznych dokumentów"         
-#&gt; [14] "There are  0  people in  T: Odbiór odpisu po rejestracji  zagranicznych dokumentów"    
-#&gt; [15] "There are  0  people in  W: Złożenie wniosku oraz odbiór zamówionych odpisów"          
-#&gt; [16] "There are  0  people in  X: Kasa"                                                      
-#&gt; [17] "There are  0  people in  C: Wydanie zaświadczenia o stanie cywilnym"                   
-#&gt; [18] "There are  1  people in  O: Uznanie ojcostwa przed urodzeniem się dziecka"             
-#&gt; [19] "There are  0  people in  T: Sprostowanie lub uzupełnienie aktu"                        </div></pre>
+<span class='fu'>get_waiting_time</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] "10" "10" "10" "10" "10" "10" "10" "10" "10" "10" "10" "10" "10" "10" "10"
+#&gt; [16] "60" "60" "10" "10"</div><div class='input'>
+<span class='fu'>get_open_counters</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</div><div class='input'>
+<span class='fu'>get_current_ticket_number</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; [1] 0</div><div class='input'>
+<span class='fu'>get_number_of_people</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -237,6 +187,8 @@ amount of people in a specific queue in specified office.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#functions">Functions</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
@@ -247,7 +199,7 @@ amount of people in a specific queue in specified office.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Your Name.</p>
+  <p>Developed by Hanna Zdulska, Jakub Pingielski, Sebastian Sowik, Pawel Morgen.</p>
 </div>
 
 <div class="pkgdown">

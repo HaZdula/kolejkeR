@@ -18,7 +18,8 @@
 #' @examples 
 #' office <- get_available_offices()[1]
 #' get_raw_data(office)
-#' @seealso \code{\link[kolejkeR]{get_waiting_time}} and others for extracting specific data.
+#' @seealso \code{\link[kolejkeR]{get_waiting_time}} and others to extract data directly.
+#' @seealso \code{\link[kolejkeR]{get_waiting_time_verbose}} and others for a more verbose output.
 #' @export 
 get_raw_data <- function(office_name) {
   get_data(office_name)
@@ -50,7 +51,7 @@ get_available_queues <- function(office_name) {
 
 
 
-#' @title Get specific data
+#' @title Get specific data directly
 #' @inheritParams get_raw_data
 #' @param queue_name A \code{character} describing a queue we are interested in.
 
@@ -58,11 +59,9 @@ get_available_queues <- function(office_name) {
 #' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 #' amount of people in a specific queue in specified office.
 #' @describeIn get_waiting_time Returns expected time to be served.
-#' @return A \code{character} in format depending on the called function and the variable \code{polish}. Below we assume, that \code{polish} variable is default.
+#' @return A \code{character} vector of length 1, containing the information dependent on the called function.
 #' 
-#' If \code{get_waiting_time} is called: 
-#' 
-#' "Waiting time for <queue name> is x minutes".
+#' If \code{get_waiting_time} is called: Estimated time of waiting in the queue, in minutes.
 #' @examples office <- get_available_offices()[1]
 #' queue <- get_available_queues(office)
 #' 
@@ -73,6 +72,7 @@ get_available_queues <- function(office_name) {
 #' get_current_ticket_number(office, queue)
 #' 
 #' get_number_of_people(office, queue)
+#' @seealso \code{\link[kolejkeR]{get_waiting_time_verbose}} and others for a more verbose output.
 #' @export 
 get_waiting_time <- function(office_name, queue_name) {
   
@@ -84,30 +84,31 @@ get_waiting_time <- function(office_name, queue_name) {
   minutes
 }
 
-#' @title Get specific data
+#' @title Get specific data verbosely
 #' @inheritParams get_raw_data
 #' @param queue_name A \code{character} describing a queue we are interested in.
 
 #' You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.
-#' @param language A \code{character}. Only two languages supported english (\code{"en"}) and polish (\code{"pl"}).
+#' @param language A \code{character}. Only two languages supported: english (\code{"en"}) and polish (\code{"pl"}).
 #' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 #' amount of people in a specific queue in specified office.
-#' @describeIn get_waiting_time Returns expected time to be served.
-#' @return A \code{character} in format depending on the called function and the variable \code{polish}. Below we assume, that \code{polish} variable is default.
+#' @describeIn get_waiting_time_verbose Returns expected time to be served.
+#' @return A \code{character} in format depending on the called function and the variable \code{language}. Below we assume, that \code{language} variable is default.
 #' 
-#' If \code{get_waiting_time} is called: 
+#' If \code{get_waiting_time_verbose} is called: 
 #' 
 #' "Waiting time for <queue name> is x minutes".
 #' @examples office <- get_available_offices()[1]
 #' queue <- get_available_queues(office)
 #' 
-#' get_waiting_time(office, queue)
+#' get_waiting_time_verbose(office, queue)
 #' 
-#' get_open_counters(office, queue)
+#' get_open_counters_verbose(office, queue)
 #' 
-#' get_current_ticket_number(office, queue)
+#' get_current_ticket_number_verbose(office, queue)
 #' 
-#' get_number_of_people(office, queue)
+#' get_number_of_people_verbose(office, queue)
+#' @seealso \code{\link[kolejkeR]{get_waiting_time}} and others to extract data directly.
 #' @export 
 get_waiting_time_verbose <- function(office_name, queue_name, language="en") {
   
@@ -122,6 +123,9 @@ get_waiting_time_verbose <- function(office_name, queue_name, language="en") {
 }
 
 
+#' @inheritParams get_waiting_time
+#' @describeIn get_waiting_time Returns amount of opened encounters.
+#' @return If \code{get_open_encounters} is called - the amount of open encounters servicing the queue.
 #' @export 
 get_open_counters <- function(office_name, queue_name) {
   
@@ -133,9 +137,9 @@ get_open_counters <- function(office_name, queue_name) {
   counters
 }
 
-#' @inheritParams get_waiting_time
-#' @describeIn get_waiting_time Returns amount of opened encounters.
-#' @return If \code{get_open_encounters} is called: 
+#' @inheritParams get_waiting_time_verbose
+#' @describeIn get_waiting_time_verbose Returns amount of opened encounters.
+#' @return If \code{get_open_encounters_verbose} is called: 
 #' 
 #' "There are x open encounters for <queue name>".
 #' @export 
@@ -150,7 +154,9 @@ get_open_counters_verbose <- function(office_name, queue_name, language = "en") 
   )
 }
 
-
+#' @inheritParams get_waiting_time
+#' @describeIn get_waiting_time Returns the identifier of the current ticket.
+#' @return If \code{get_current_ticket_number} is called - the current ticket identifier.
 #' @export 
 get_current_ticket_number <- function(office_name, queue_name) {
   
@@ -161,9 +167,9 @@ get_current_ticket_number <- function(office_name, queue_name) {
   ticket_number
 }
 
-#' @inheritParams get_waiting_time
-#' @describeIn get_waiting_time Returns current ticket number.
-#' @return If \code{get_current_number} is called: 
+#' @inheritParams get_waiting_time_verbose
+#' @describeIn get_waiting_time_verbose Returns current ticket number.
+#' @return If \code{get_current_number_verbose} is called: 
 #' 
 #' "Current ticket number is x"
 #' @export 
@@ -176,9 +182,11 @@ get_current_ticket_number_verbose <- function(office_name, queue_name, language=
   )
 }
 
-
+#' @inheritParams get_waiting_time
+#' @describeIn get_waiting_time Returns amount of people waiting in the queue.
+#' @return If \code{get_number_of_people} is called - the amount of people waiting in the queue.
 #' @export 
-get_number_of_people <- function(office_name, queue_name, language = 'en', verbose=TRUE) {
+get_number_of_people <- function(office_name, queue_name) {
   
   data <- get_data(office_name)
   
@@ -189,13 +197,13 @@ get_number_of_people <- function(office_name, queue_name, language = 'en', verbo
   number_of_people
 }
 
-#' @inheritParams get_waiting_time
-#' @describeIn get_waiting_time Returns number of people waiting in specified queue.
-#' @return If \code{get_number_of_people} is called: 
+#' @inheritParams get_waiting_time_verbose
+#' @describeIn get_waiting_time_verbose Returns number of people waiting in specified queue.
+#' @return If \code{get_number_of_people_verbose} is called: 
 #' 
 #' "There are x people in <queue name>"
 #' @export 
-get_number_of_people_verbose <- function(office_name, queue_name, language = 'en', verbose=TRUE) {
+get_number_of_people_verbose <- function(office_name, queue_name, language = 'en') {
   
   number_of_people <- get_number_of_people(office_name, queue_name)
   as.character(
