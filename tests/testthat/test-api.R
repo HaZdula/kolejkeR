@@ -42,7 +42,7 @@ httptest::with_mock_api({
   test_that("get_waiting_time works correctly", {
     sapply(names(testset), function(x){
       queue_name <- get_available_queues(x)[1]
-      msg <- get_waiting_time(x, queue_name)
+      msg <- get_waiting_time_verbose(x, queue_name)
       expect_equal(class(msg),"character")
       waiting_time <- stringr::str_extract(msg,"\\d+")
       expect_true(as.numeric(waiting_time) >= 0)
