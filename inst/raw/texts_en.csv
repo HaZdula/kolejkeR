@@ -1,5 +1,5 @@
 "key","value"
-"get_waiting_time","Waiting time for {queue_name} is {minutes} minutes."
+"get_waiting_time","Waiting time for '{queue_name}' is {minutes} minutes."
 "get_open_counters","There are {counters} open counters for {queue_name}."
-"get_current_ticket_number","Obecny numerek w kolejce to: {ticket_number}."
+"get_current_ticket_number","Current ticket number is {ticket_number}."
 "get_number_of_people","There are {number_of_people} people in {queue_name}."
