@@ -108,8 +108,8 @@ queues <- get_available_queues(Bielany_office)
 # Find the exact name of the queue
 queue500 <- queues[stri_detect_fixed(queues, "500+")][1]
 
-print(get_waiting_time(Bielany_office, queue500))
-print(get_number_of_people(Bielany_office, queue500))
+print(get_waiting_time_verbose(Bielany_office, queue500, language = 'pl'))
+print(get_number_of_people_verbose(Bielany_office, queue500, language = 'pl'))
 
 ```
 Now you can go to the municipal office with a big smile on your face.
