@@ -44,9 +44,8 @@ httptest::with_mock_api({
       queue_name <- get_available_queues(x)[1]
       msg <- get_waiting_time(x, queue_name)
       expect_equal(class(msg),"character")
-      msg_vec <- unlist(strsplit(msg, " "))
-      waitng_time <- msg_vec[tail(grep("[0-9]", msg_vec),n=1)]
-      expect_true(as.numeric(waitng_time) >= 0)
+      waiting_time <- stringr::str_extract(msg,"\\d+")
+      expect_true(as.numeric(waiting_time) >= 0)
     })
   })
 })
@@ -58,13 +57,11 @@ httptest::with_mock_api({
       queue_name <- get_available_queues(x)[1]
       msg <- get_open_counters_verbose(x, queue_name)
       expect_equal(class(msg),"character")
-      msg_vec <- unlist(strsplit(msg, " "))
-      n_counters <- msg_vec[grep("[0-9]", msg_vec)[1]]
+      n_counters <- stringr::str_extract(msg,"\\d+")
       expect_true(as.numeric(n_counters) >= 0)
     })
   })
 })
-
 
 # this may not work in opening hours
 httptest::with_mock_api({
@@ -73,8 +70,7 @@ httptest::with_mock_api({
       queue_name <- get_available_queues(x)[1]
       msg <- get_current_ticket_number_verbose(x, queue_name)
       expect_equal(class(msg),"character")
-      msg_vec <- unlist(strsplit(msg, " "))
-      n_ticket <- msg_vec[tail(grep("[0-9]", msg_vec), n=1)]
+      n_ticket <- stringr::str_extract(msg,"\\d+")
       expect_true(as.numeric(n_ticket) >= 0)
     })
   })
@@ -87,8 +83,7 @@ httptest::with_mock_api({
       queue_name <- get_available_queues(x)[1]
       msg <- get_number_of_people_verbose(x, queue_name)
       expect_equal(class(msg),"character")
-      msg_vec <- unlist(strsplit(msg, " "))
-      n_ticket <- msg_vec[grep("[0-9]", msg_vec)[1]]
+      n_ticket <- stringr::str_extract(msg,"\\d+")
       expect_true(as.numeric(n_ticket) >= 0)
     })
   })
