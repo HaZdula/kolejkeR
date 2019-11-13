@@ -67,7 +67,7 @@ The function returns a `data.frame` with following columns:
 
 ## 5. Getting specific data directly
 
-These functions are designed to get exact data quickly in form of a `character` vector of length 1. These are:
+These functions, vectorized over `queue_name`, are designed to get exact data quickly in form of a `character` vector of the same length as `queue_name`. These are:
 
 * `get_waiting_time(office_name, queue_name)`
 
@@ -79,7 +79,7 @@ These functions are designed to get exact data quickly in form of a `character` 
 
 ## 6. Getting specific data verbosely
 
-These functions are designed to get exact data quickly in form of a user-friendly statement. Each of them returns a `character` sentence, depending the question called. These are:
+These functions, vectorized over `queue_name`, are designed to get exact data quickly in form of a user-friendly statement. Each of them returns a `character` vector of the same length as `queue_name`, with each element in a form of a sentence , depending the question called. These are:
 
 * `get_waiting_time(office_name, queue_name, language = 'en')`
 

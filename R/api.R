@@ -53,13 +53,13 @@ get_available_queues <- function(office_name) {
 
 #' @title Get specific data directly
 #' @inheritParams get_raw_data
-#' @param queue_name A \code{character} describing a queue we are interested in.
+#' @param queue_name A \code{character} vector describing the queues we are interested in.
 
 #' You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.
 #' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
-#' amount of people in a specific queue in specified office.
+#' amount of people in a set of specific queues in specified office.
 #' @describeIn get_waiting_time Returns expected time to be served.
-#' @return A \code{character} vector of length 1, containing the information dependent on the called function.
+#' @return A \code{character} vector of the same length as \code{queue_name}, containing the information dependent on the called function.
 #' 
 #' If \code{get_waiting_time} is called: Estimated time of waiting in the queue, in minutes.
 #' @examples office <- get_available_offices()[1]
@@ -91,9 +91,9 @@ get_waiting_time <- function(office_name, queue_name) {
 #' You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.
 #' @param language A \code{character}. Only two languages supported: english (\code{"en"}) and polish (\code{"pl"}).
 #' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
-#' amount of people in a specific queue in specified office.
+#' amount of people in a set of specified queues in specified office.
 #' @describeIn get_waiting_time_verbose Returns expected time to be served.
-#' @return A \code{character} in format depending on the called function and the variable \code{language}. Below we assume, that \code{language} variable is default.
+#' @return A \code{character} vector of the same length as \code{queue_name} with each element in format depending on the called function and the variable \code{language}. Below we assume, that \code{language} variable is default.
 #' 
 #' If \code{get_waiting_time_verbose} is called: 
 #' 
@@ -114,7 +114,7 @@ get_waiting_time_verbose <- function(office_name, queue_name, language="en") {
   
   minutes <- get_waiting_time(office_name, queue_name)
   as.character(
-    glue::glue(texts[[language]][["wait_time_format"]],
+    glue::glue(texts[[language]][["get_waiting_time"]],
                .envir=list(queue_name=queue_name,
                            minutes=minutes,
                            ending=female_endings[as.numeric(minutes) %% 10 + 1]))

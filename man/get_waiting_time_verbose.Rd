@@ -27,7 +27,7 @@ You can get a list of possible values using \code{\link[kolejkeR]{get_available_
 \item{language}{A \code{character}. Only two languages supported: english (\code{"en"}) and polish (\code{"pl"}).}
 }
 \value{
-A \code{character} in format depending on the called function and the variable \code{language}. Below we assume, that \code{language} variable is default.
+A \code{character} vector of the same length as \code{queue_name} with each element in format depending on the called function and the variable \code{language}. Below we assume, that \code{language} variable is default.
 
 If \code{get_waiting_time_verbose} is called: 
 
@@ -47,7 +47,7 @@ If \code{get_number_of_people_verbose} is called:
 }
 \description{
 Several functions to get specific data, such as waiting time, open encounters, current ticket number and
-amount of people in a specific queue in specified office.
+amount of people in a set of specified queues in specified office.
 }
 \section{Functions}{
 \itemize{

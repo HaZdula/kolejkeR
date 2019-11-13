@@ -20,11 +20,11 @@ get_number_of_people(office_name, queue_name)
 
  You can get a list of possible values using \code{\link[kolejkeR]{get_available_offices}} function.}
 
-\item{queue_name}{A \code{character} describing a queue we are interested in.
+\item{queue_name}{A \code{character} vector describing the queues we are interested in.
 You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.}
 }
 \value{
-A \code{character} vector of length 1, containing the information dependent on the called function.
+A \code{character} vector of the same length as \code{queue_name}, containing the information dependent on the called function.
 
 If \code{get_waiting_time} is called: Estimated time of waiting in the queue, in minutes.
 
@@ -36,7 +36,7 @@ If \code{get_number_of_people} is called - the amount of people waiting in the q
 }
 \description{
 Several functions to get specific data, such as waiting time, open encounters, current ticket number and
-amount of people in a specific queue in specified office.
+amount of people in a set of specific queues in specified office.
 }
 \section{Functions}{
 \itemize{
