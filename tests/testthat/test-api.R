@@ -74,7 +74,9 @@ httptest::with_mock_api({
       expect_equal(class(msg),"character")
       msg_vec <- unlist(strsplit(msg, " "))
       n_ticket <- msg_vec[tail(grep("[0-9]", msg_vec), n=1)]
-      expect_true(as.numeric(n_ticket) >= 0)
+      chars <- strsplit(n_ticket, "")[[1]]
+      n_ticket2 <- do.call(paste0, as.list(chars[chars %in% as.character(0:9)]))
+      expect_true(as.numeric(n_ticket2) >= 0 | length(as.numeric(n_ticket2)) == 0)
     })
   })
 })
