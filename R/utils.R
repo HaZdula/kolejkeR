@@ -25,7 +25,7 @@ get_data <- function(district_name) {
   jsonlite::fromJSON(request_url)[["result"]][["grupy"]]
 }
 
-office_ids <- list(
+office_ids_list <- list(
   USC_Andersa = "5d2e698a-9c31-456b-8452-7ce33e7deb94",
   UD_Bialoleka = "95fee469-79db-4b4b-9ddc-91d49d1f0f51",
   UD_Bielany = "9c3d5770-57d8-4365-994c-69c5ac4186ee",
@@ -49,14 +49,18 @@ office_ids <- list(
   USC_Sandomierska = "1add8722-fe63-45aa-95c8-cf7f0ddd1fe0"
 )
 female_endings <- c(rep("", 2), rep("y", 3), rep("", 5))
-counters_to_string <- c(rep(" stanowiska są otwarte w ", 2),
-                        rep(" stanowisk jest otwartych w ", 3),
-                        rep(" stanowiska są otwarte w ", 5))
-# 1 - stanowisk jest otwartych
-# 2-4 - stanowiska są otwarte
-# 5-9 - stanowisk jest otwartych
+counters_to_string <- function() {
+  c(texts[["pl"]][["0_5-9_checkouts_inflection"]],
+    texts[["pl"]][["1_checkouts_inflection"]],
+    rep(texts[["pl"]][["2-3_checkouts_inflection"]],3),
+    rep(texts[["pl"]][["0_5-9_checkouts_inflection"]],5))
+}
+# 1 - stanowisk jest otwartych w
+# 2 - stanowisko jest otwarte w
+# 3-5 - stanowiska są otwarte w
+# 6-10 - stanowisk jest otwartych w
 
-office_ids <- office_ids %>% 
+office_ids <- office_ids_list %>% 
   data.frame() %>%
   tidyr::gather(key = 'office', value = 'id')
   # Może tidyr::pivot_longer() ?

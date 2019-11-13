@@ -49,12 +49,12 @@ get_available_queues <- function(office_name) {
 }
 
 
+
 #' @title Get specific data
 #' @inheritParams get_raw_data
 #' @param queue_name A \code{character} describing a queue we are interested in.
 
 #' You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.
-#' @param polish A \code{boolean}. Should the result be in english (\code{FALSE}), or polish (\code{TRUE}) ?
 #' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 #' amount of people in a specific queue in specified office.
 #' @describeIn get_waiting_time Returns expected time to be served.
@@ -74,19 +74,64 @@ get_available_queues <- function(office_name) {
 #' 
 #' get_number_of_people(office, queue)
 #' @export 
-get_waiting_time <- function(office_name, queue_name, polish = FALSE) {
+get_waiting_time <- function(office_name, queue_name) {
+  
+  data <- get_data(office_name)
+
+  if(any(!queue_name %in% data[["nazwaGrupy"]])) stop("Unrecognized queue name!")
+  
+  minutes <- data[data[["nazwaGrupy"]] == queue_name, "czasObslugi"]
+  minutes
+}
+
+#' @title Get specific data
+#' @inheritParams get_raw_data
+#' @param queue_name A \code{character} describing a queue we are interested in.
+
+#' You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.
+#' @param language A \code{character}. Only two languages supported english (\code{"en"}) and polish (\code{"pl"}).
+#' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
+#' amount of people in a specific queue in specified office.
+#' @describeIn get_waiting_time Returns expected time to be served.
+#' @return A \code{character} in format depending on the called function and the variable \code{polish}. Below we assume, that \code{polish} variable is default.
+#' 
+#' If \code{get_waiting_time} is called: 
+#' 
+#' "Waiting time for <queue name> is x minutes".
+#' @examples office <- get_available_offices()[1]
+#' queue <- get_available_queues(office)
+#' 
+#' get_waiting_time(office, queue)
+#' 
+#' get_open_counters(office, queue)
+#' 
+#' get_current_ticket_number(office, queue)
+#' 
+#' get_number_of_people(office, queue)
+#' @export 
+get_waiting_time_verbose <- function(office_name, queue_name, language="en") {
+  
+  minutes <- get_waiting_time(office_name, queue_name)
+  as.character(
+    glue::glue(texts[[language]][["wait_time_format"]],
+               .envir=list(queue_name=queue_name,
+                           minutes=minutes,
+                           ending=female_endings[as.numeric(minutes) %% 10 + 1]))
+  )
+    
+}
+
+
+#' @export 
+get_open_counters <- function(office_name, queue_name) {
   
   data <- get_data(office_name)
   
-  if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
+  if(any(!queue_name %in% data[["nazwaGrupy"]])) stop("Unrecognized queue name!")
   
-  minutes <- data[data[["nazwaGrupy"]] == queue_name, "czasObslugi"]
-  
-  ifelse(polish,
-         paste0("Czas oczekiwania w '", queue_name, "' wynosi ", minutes, " minut", female_endings[as.numeric(minutes) %% 10 + 1], "."),
-         paste("Waiting time for", queue_name, "is", minutes, "minutes."))
+  counters <- data[data[["nazwaGrupy"]] == queue_name, "liczbaCzynnychStan"]
+  counters
 }
-
 
 #' @inheritParams get_waiting_time
 #' @describeIn get_waiting_time Returns amount of opened encounters.
@@ -94,19 +139,27 @@ get_waiting_time <- function(office_name, queue_name, polish = FALSE) {
 #' 
 #' "There are x open encounters for <queue name>".
 #' @export 
-get_open_counters <- function(office_name, queue_name, polish = FALSE) {
+get_open_counters_verbose <- function(office_name, queue_name, language = "en") {
   
-  data <- get_data(office_name)
-  
-  if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
-  
-  counters <- data[data[["nazwaGrupy"]] == queue_name, "liczbaCzynnychStan"]
-  
-  ifelse(polish,
-         paste0("Obecnie ", counters, counters_to_string[as.numeric(counters) %% 10 + 1], "'", queue_name,"'."),
-         paste("There are ", counters, "open counters for ", queue_name))
+  counters <- get_open_counters(office_name, queue_name)
+  as.character(
+    glue::glue(texts[[language]][["get_open_counters"]],
+               .envir=list(queue_name=queue_name,
+                           counters_literal=counters_to_string()[as.numeric(counters) %% 10 + 1],
+                           counters=counters))
+  )
 }
 
+
+#' @export 
+get_current_ticket_number <- function(office_name, queue_name) {
+  
+  data <- get_data(office_name)
+  if(any(!queue_name %in% data[["nazwaGrupy"]])) stop("Unrecognized queue name!")
+  ticket_number <- data[data[["nazwaGrupy"]] == queue_name, "aktualnyNumer"]
+  if(ticket_number == ""){ticket_number <- 0}
+  ticket_number
+}
 
 #' @inheritParams get_waiting_time
 #' @describeIn get_waiting_time Returns current ticket number.
@@ -114,15 +167,26 @@ get_open_counters <- function(office_name, queue_name, polish = FALSE) {
 #' 
 #' "Current ticket number is x"
 #' @export 
-get_current_ticket_number <- function(office_name, queue_name, polish = FALSE) {
+get_current_ticket_number_verbose <- function(office_name, queue_name, language="en") {
+  
+  ticket_number <- get_current_ticket_number(office_name, queue_name)
+  as.character(
+    glue::glue(texts[[language]][["get_current_ticket_number"]],
+             .envir=list(ticket_number=ticket_number))
+  )
+}
+
+
+#' @export 
+get_number_of_people <- function(office_name, queue_name, language = 'en', verbose=TRUE) {
   
   data <- get_data(office_name)
-  if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
-  ticket_number <- data[data[["nazwaGrupy"]] == queue_name, "aktualnyNumer"]
-  if(ticket_number == ""){ticket_number <- 0}
-  ifelse(polish,
-         paste0("Obecny numerek w kolejce to: ", ticket_number, "."),
-         paste("Current ticket number is ", ticket_number))
+  
+  if(any(!queue_name %in% data[["nazwaGrupy"]])) stop("Unrecognized queue name!")
+  
+  number_of_people <- data[data[["nazwaGrupy"]] == queue_name, "liczbaKlwKolejce"]
+  
+  number_of_people
 }
 
 #' @inheritParams get_waiting_time
@@ -131,17 +195,13 @@ get_current_ticket_number <- function(office_name, queue_name, polish = FALSE) {
 #' 
 #' "There are x people in <queue name>"
 #' @export 
-get_number_of_people <- function(office_name, queue_name, polish = FALSE) {
+get_number_of_people_verbose <- function(office_name, queue_name, language = 'en', verbose=TRUE) {
   
-  data <- get_data(office_name)
-  
-  if(!queue_name %in% data[["nazwaGrupy"]]) stop("Unrecognized queue name!")
-  
-  number_of_people <- data[data[["nazwaGrupy"]] == queue_name, "liczbaKlwKolejce"]
-  
-  ifelse(polish,
-         paste0("W kolejce do '", queue_name, "' czeka ", number_of_people, " osób."),
-         paste("There are ", number_of_people, " people in ", queue_name))
-  
+  number_of_people <- get_number_of_people(office_name, queue_name)
+  as.character(
+    glue::glue(texts[[language]][["get_number_of_people"]],
+                     .envir=list(queue_name=queue_name,
+                                 number_of_people=number_of_people)) 
+  )
 }
 
