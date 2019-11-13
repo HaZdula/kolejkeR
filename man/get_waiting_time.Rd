@@ -2,31 +2,18 @@
 % Please edit documentation in R/api.R
 \name{get_waiting_time}
 \alias{get_waiting_time}
-\alias{get_waiting_time_verbose}
 \alias{get_open_counters}
-\alias{get_open_counters_verbose}
 \alias{get_current_ticket_number}
-\alias{get_current_ticket_number_verbose}
 \alias{get_number_of_people}
-\alias{get_number_of_people_verbose}
-\title{Get specific data}
+\title{Get specific data directly}
 \usage{
 get_waiting_time(office_name, queue_name)
 
-get_waiting_time_verbose(office_name, queue_name, language = "en")
-
 get_open_counters(office_name, queue_name)
-
-get_open_counters_verbose(office_name, queue_name, language = "en")
 
 get_current_ticket_number(office_name, queue_name)
 
-get_current_ticket_number_verbose(office_name, queue_name,
-  language = "en")
-
 get_number_of_people(office_name, queue_name)
-
-get_number_of_people_verbose(office_name, queue_name, language = "en")
 }
 \arguments{
 \item{office_name}{\code{character} acronym of office in Warsaw.
@@ -35,41 +22,17 @@ get_number_of_people_verbose(office_name, queue_name, language = "en")
 
 \item{queue_name}{A \code{character} describing a queue we are interested in.
 You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.}
-
-\item{language}{A \code{character}. Only two languages supported english (\code{"en"}) and polish (\code{"pl"}).}
 }
 \value{
-A \code{character} number of minutes extracted from external api
+A \code{character} vector of length 1, containing the information dependent on the called function.
 
-A \code{character} in format depending on the called function and the variable \code{language}. Below we assume, that \code{language} variable is default.
+If \code{get_waiting_time} is called: Estimated time of waiting in the queue, in minutes.
 
-If \code{get_waiting_time_verbose} is called: 
+If \code{get_open_encounters} is called - the amount of open encounters servicing the queue.
 
-"Waiting time for <queue name> is x minutes".
+If \code{get_current_ticket_number} is called - the current ticket identifier.
 
-If \code{get_open_encounters} is called: 
-
-"<number_of_available_office_checkouts>"
-
-If \code{get_open_counters_verbose} is called: 
-
-"There are x open counters for <queue name>".
-
-If \code{get_current_number} is called: 
-
-"<current_ticket_number>"
-
-If \code{get_current_number} is called: 
-
-"Current ticket number is x"
-
-If \code{get_number_of_people} is called: 
-
-"<number_of_people_in_the_queue>"
-
-If \code{get_number_of_people_verbose} is called: 
-
-"There are x people in <queue name>"
+If \code{get_number_of_people} is called - the amount of people waiting in the queue.
 }
 \description{
 Several functions to get specific data, such as waiting time, open encounters, current ticket number and
@@ -79,19 +42,11 @@ amount of people in a specific queue in specified office.
 \itemize{
 \item \code{get_waiting_time}: Returns expected time to be served.
 
-\item \code{get_waiting_time_verbose}: Returns expected time to be served with user friendly message.
-
 \item \code{get_open_counters}: Returns amount of opened encounters.
 
-\item \code{get_open_counters_verbose}: Returns user friendly message with amount of opened counters.
+\item \code{get_current_ticket_number}: Returns the identifier of the current ticket.
 
-\item \code{get_current_ticket_number}: Returns current ticket number.
-
-\item \code{get_current_ticket_number_verbose}: Returns user friendly message with current ticket number.
-
-\item \code{get_number_of_people}: Returns number of people waiting in specified queue.
-
-\item \code{get_number_of_people_verbose}: Returns number of people waiting in specified queue.
+\item \code{get_number_of_people}: Returns amount of people waiting in the queue.
 }}
 
 \examples{
@@ -105,14 +60,7 @@ get_open_counters(office, queue)
 get_current_ticket_number(office, queue)
 
 get_number_of_people(office, queue)
-office <- get_available_offices()[1]
-queue <- get_available_queues(office)
-
-get_waiting_time_verbose(office, queue)
-
-get_open_counters_verbose(office, queue)
-
-get_current_ticket_number_verbose(office, queue)
-
-get_number_of_people_verbose(office, queue)
+}
+\seealso{
+\code{\link[kolejkeR]{get_waiting_time_verbose}} and others for a more verbose output.
 }
