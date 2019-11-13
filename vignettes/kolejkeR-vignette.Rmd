@@ -77,7 +77,7 @@ These functions are designed to get exact data quickly in form of a `character` 
 
 * `get_number_of_people(office_name, queue_name)`.
 
-## 5. Getting specific data verbosely
+## 6. Getting specific data verbosely
 
 These functions are designed to get exact data quickly in form of a user-friendly statement. Each of them returns a `character` sentence, depending the question called. These are:
 
@@ -91,7 +91,7 @@ These functions are designed to get exact data quickly in form of a user-friendl
 
 The `language` variable regards the desired language of the output. Currently the only supported languages are English and Polish.
 
-## 6. Example
+## 7. Example
 
 Let's assume, that you would like to file an application for 500+ programme in municipal office in Bielany in Warsaw. You wish to find out the average time you need to wait and the amount of people already waiting.
 

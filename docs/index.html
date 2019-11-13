@@ -101,8 +101,8 @@
 <span id="cb2-10"><a href="#cb2-10"></a><span class="co"># Find the exact name of the queue</span></span>
 <span id="cb2-11"><a href="#cb2-11"></a>queue500 &lt;-<span class="st"> </span>queues[<span class="kw"><a href="https://rdrr.io/pkg/stringi/man/stri_detect.html">stri_detect_fixed</a></span>(queues, <span class="st">"500+"</span>)][<span class="dv">1</span>]</span>
 <span id="cb2-12"><a href="#cb2-12"></a></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="reference/get_waiting_time.html">get_waiting_time</a></span>(Bielany_office, queue500))</span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="reference/get_waiting_time.html">get_number_of_people</a></span>(Bielany_office, queue500))</span></code></pre></div>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="reference/get_waiting_time_verbose.html">get_waiting_time_verbose</a></span>(Bielany_office, queue500))</span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="reference/get_waiting_time_verbose.html">get_number_of_people_verbose</a></span>(Bielany_office, queue500))</span></code></pre></div>
 <p>Now you can go to the municipal office with a big smile on your face.</p>
 </div>
 </div>
