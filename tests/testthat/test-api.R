@@ -33,7 +33,8 @@ httptest::with_mock_api({
   test_that("get_available_queues works correctly", {
     sapply(names(testset), function(x){
       expect_equal(class(get_available_queues(x)),"character")})
-      sapply(names(testset), function(x){expect_gte(length(get_available_queues(x)),0)})
+      sapply(names(testset), function(x){
+        expect_gte(length(get_available_queues(x)),0)})
   })
 })
 

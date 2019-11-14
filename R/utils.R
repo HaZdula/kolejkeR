@@ -60,8 +60,9 @@ counters_to_string <- function() {
 # 3-5 - stanowiska są otwarte w
 # 6-10 - stanowisk jest otwartych w
 
-office_ids <- office_ids_list %>% 
+office_ids <- suppressWarnings({
+  office_ids_list %>% 
   data.frame() %>%
   tidyr::gather(key = 'office', value = 'id')
-  # Może tidyr::pivot_longer() ?
+})
 
