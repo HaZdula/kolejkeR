@@ -81,7 +81,7 @@ get_waiting_time <- function(office_name, queue_name) {
   if(any(!queue_name %in% data[["nazwaGrupy"]])) stop("Unrecognized queue name!")
   
   minutes <- data[data[["nazwaGrupy"]] == queue_name, "czasObslugi"]
-  minutes
+  as.numeric(minutes)
 }
 
 #' @title Get specific data verbosely
@@ -113,13 +113,14 @@ get_waiting_time <- function(office_name, queue_name) {
 get_waiting_time_verbose <- function(office_name, queue_name, language="en") {
   
   minutes <- get_waiting_time(office_name, queue_name)
-  as.character(
-    glue::glue(texts[[language]][["get_waiting_time"]],
-               .envir=list(queue_name=queue_name,
-                           minutes=minutes,
-                           ending=female_endings[as.numeric(minutes) %% 10 + 1]))
-  )
-    
+  apply(rbind(minutes, queue_name), 2, function(x) {
+    as.character(
+      glue::glue(texts[[language]][["get_waiting_time"]],
+                .envir=list(queue_name=x[2],
+                          minutes=x[1],
+                          ending=female_endings[as.numeric(x[1]) %% 10 + 1]))
+            )
+  })
 }
 
 
@@ -146,12 +147,14 @@ get_open_counters <- function(office_name, queue_name) {
 get_open_counters_verbose <- function(office_name, queue_name, language = "en") {
   
   counters <- get_open_counters(office_name, queue_name)
-  as.character(
-    glue::glue(texts[[language]][["get_open_counters"]],
-               .envir=list(queue_name=queue_name,
-                           counters_literal=counters_to_string()[as.numeric(counters) %% 10 + 1],
-                           counters=counters))
-  )
+  apply(rbind(counters, queue_name), 2, function(x) {
+    as.character(
+      glue::glue(texts[[language]][["get_open_counters"]],
+                 .envir=list(queue_name=x[2],
+                             counters_literal=counters_to_string()[as.numeric(x[1]) %% 10 + 1],
+                             counters=as.character(x[1])))
+    )
+  })
 }
 
 #' @inheritParams get_waiting_time
@@ -176,10 +179,12 @@ get_current_ticket_number <- function(office_name, queue_name) {
 get_current_ticket_number_verbose <- function(office_name, queue_name, language="en") {
   
   ticket_number <- get_current_ticket_number(office_name, queue_name)
-  as.character(
-    glue::glue(texts[[language]][["get_current_ticket_number"]],
-             .envir=list(ticket_number=ticket_number))
-  )
+  sapply(ticket_number, function(x) {
+    as.character(
+      glue::glue(texts[[language]][["get_current_ticket_number"]],
+                 .envir=list(ticket_number=x))
+    )
+})
 }
 
 #' @inheritParams get_waiting_time
@@ -206,10 +211,12 @@ get_number_of_people <- function(office_name, queue_name) {
 get_number_of_people_verbose <- function(office_name, queue_name, language = 'en') {
   
   number_of_people <- get_number_of_people(office_name, queue_name)
-  as.character(
-    glue::glue(texts[[language]][["get_number_of_people"]],
-                     .envir=list(queue_name=queue_name,
-                                 number_of_people=number_of_people)) 
-  )
+  apply(rbind(number_of_people, queue_name), 2, function(x) {
+    as.character(
+      glue::glue(texts[[language]][["get_number_of_people"]],
+                 .envir=list(queue_name=x[2],
+                             number_of_people=x[1])) 
+    )
+})
 }
 
