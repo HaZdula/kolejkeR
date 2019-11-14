@@ -59,9 +59,9 @@ get_available_queues <- function(office_name) {
 #' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 #' amount of people in a set of specific queues in specified office.
 #' @describeIn get_waiting_time Returns expected time to be served.
-#' @return A \code{character} vector of the same length as \code{queue_name}, containing the information dependent on the called function.
+#' @return A \code{character} vector (unless specified diffrently below) of the same length as \code{queue_name}, containing the information dependent on the called function.
 #' 
-#' If \code{get_waiting_time} is called: Estimated time of waiting in the queue, in minutes.
+#' If \code{get_waiting_time} is called: A \code{numeric} vector with estimated time of waiting in the queues, in minutes.
 #' @examples office <- get_available_offices()[1]
 #' queue <- get_available_queues(office)
 #' 
@@ -126,7 +126,7 @@ get_waiting_time_verbose <- function(office_name, queue_name, language="en") {
 
 #' @inheritParams get_waiting_time
 #' @describeIn get_waiting_time Returns amount of opened encounters.
-#' @return If \code{get_open_encounters} is called - the amount of open encounters servicing the queue.
+#' @return If \code{get_open_encounters} is called - A \code{numeric} vector with the amounts of opened encounters servicing the queues.
 #' @export 
 get_open_counters <- function(office_name, queue_name) {
   
@@ -159,7 +159,7 @@ get_open_counters_verbose <- function(office_name, queue_name, language = "en") 
 
 #' @inheritParams get_waiting_time
 #' @describeIn get_waiting_time Returns the identifier of the current ticket.
-#' @return If \code{get_current_ticket_number} is called - the current ticket identifier.
+#' @return If \code{get_current_ticket_number} is called - the current ticket identifiers in the queues.
 #' @export 
 get_current_ticket_number <- function(office_name, queue_name) {
   
@@ -189,7 +189,7 @@ get_current_ticket_number_verbose <- function(office_name, queue_name, language=
 
 #' @inheritParams get_waiting_time
 #' @describeIn get_waiting_time Returns amount of people waiting in the queue.
-#' @return If \code{get_number_of_people} is called - the amount of people waiting in the queue.
+#' @return If \code{get_number_of_people} is called - A \code{numeric} vector with the amounts of people waiting in the queues.
 #' @export 
 get_number_of_people <- function(office_name, queue_name) {
   
