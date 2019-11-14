@@ -35,7 +35,7 @@
 <meta property="og:title" content="Get specific data verbosely — get_waiting_time_verbose" />
 
 <meta property="og:description" content="Several functions to get specific data, such as waiting time, open encounters, current ticket number and
-amount of people in a specific queue in specified office." />
+amount of people in a set of specified queues in specified office." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -119,7 +119,7 @@ amount of people in a specific queue in specified office." />
     <div class="ref-description">
     
     <p>Several functions to get specific data, such as waiting time, open encounters, current ticket number and
-amount of people in a specific queue in specified office.</p>
+amount of people in a set of specified queues in specified office.</p>
     
     </div>
 
@@ -153,7 +153,7 @@ You can get a list of possible values using <code><a href='get_available_queues.
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>character</code> in format depending on the called function and the variable <code>language</code>. Below we assume, that <code>language</code> variable is default.</p>
+    <p>A <code>character</code> vector of the same length as <code>queue_name</code> with each element in format depending on the called function and the variable <code>language</code>. Below we assume, that <code>language</code> variable is default.</p>
 <p>If <code>get_waiting_time_verbose</code> is called:</p>
 <p>"Waiting time for &lt;queue name&gt; is x minutes".</p>
 <p>If <code>get_open_encounters_verbose</code> is called:</p>
@@ -182,27 +182,45 @@ You can get a list of possible values using <code><a href='get_available_queues.
     <pre class="examples"><div class='input'><span class='no'>office</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_available_offices.html'>get_available_offices</a></span>()[<span class='fl'>1</span>]
 <span class='no'>queue</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_available_queues.html'>get_available_queues</a></span>(<span class='no'>office</span>)
 
-<span class='fu'>get_waiting_time_verbose</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt; character(0)</div><div class='input'>
-<span class='fu'>get_open_counters_verbose</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] "There are 0 open counters for T: Odbiór odpisu po sprostowaniu lub uzupełnieniu"            
-#&gt;  [2] "There are 0 open counters for Z: Zgłoszenie zgonu na podstawie karty zgonu"                 
-#&gt;  [3] "There are 0 open counters for P: Oświadczenie o powrocie do nazwiska noszonego przed ślubem"
-#&gt;  [4] "There are 0 open counters for S: Sprostowanie lub uzupełnienie aktu"                        
-#&gt;  [5] "There are 0 open counters for I: Zmiana imienia lub nazwiska w trybie administracyjnym"     
-#&gt;  [6] "There are 0 open counters for Z: Sprostowanie lub uzupełnienie aktu zgonu"                  
-#&gt;  [7] "There are 0 open counters for J: Zgłoszenie jubileuszu pożycia małżeńskiego"                
-#&gt;  [8] "There are 0 open counters for Sprostowanie lub uzupełnienie aktów"                          
-#&gt;  [9] "There are 0 open counters for D: Zmiana imienia dziecka"                                    
-#&gt; [10] "There are 0 open counters for M: Sprostowanie lub uzupełnienie aktu małżeństwa"             
-#&gt; [11] "There are 0 open counters for M: Złożenie dokumentów i wydawanie zaświadczeń"               
-#&gt; [12] "There are 0 open counters for A: Rejestracja noworodków"                                    
-#&gt; [13] "There are 0 open counters for T: Rejestracja na podstawie zagranicznych dokumentów"         
-#&gt; [14] "There are 0 open counters for T: Odbiór odpisu po rejestracji  zagranicznych dokumentów"    
-#&gt; [15] "There are 0 open counters for W: Złożenie wniosku oraz odbiór zamówionych odpisów"          
-#&gt; [16] "There are 0 open counters for X: Kasa"                                                      
-#&gt; [17] "There are 0 open counters for C: Wydanie zaświadczenia o stanie cywilnym"                   
-#&gt; [18] "There are 0 open counters for O: Uznanie ojcostwa przed urodzeniem się dziecka"             
-#&gt; [19] "There are 0 open counters for T: Sprostowanie lub uzupełnienie aktu"                        </div><div class='input'>
-<span class='fu'>get_current_ticket_number_verbose</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; [1] "Obecny numerek w kolejce to: 0."</div><div class='input'>
+<span class='fu'>get_waiting_time_verbose</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] "Waiting time for 'T: Odbiór odpisu po sprostowaniu lub uzupełnieniu' is 10 minutes."            
+#&gt;  [2] "Waiting time for 'Z: Zgłoszenie zgonu na podstawie karty zgonu' is 10 minutes."                 
+#&gt;  [3] "Waiting time for 'P: Oświadczenie o powrocie do nazwiska noszonego przed ślubem' is 10 minutes."
+#&gt;  [4] "Waiting time for 'S: Sprostowanie lub uzupełnienie aktu' is 10 minutes."                        
+#&gt;  [5] "Waiting time for 'I: Zmiana imienia lub nazwiska w trybie administracyjnym' is 10 minutes."     
+#&gt;  [6] "Waiting time for 'Z: Sprostowanie lub uzupełnienie aktu zgonu' is 10 minutes."                  
+#&gt;  [7] "Waiting time for 'J: Zgłoszenie jubileuszu pożycia małżeńskiego' is 10 minutes."                
+#&gt;  [8] "Waiting time for 'Sprostowanie lub uzupełnienie aktów' is 10 minutes."                          
+#&gt;  [9] "Waiting time for 'D: Zmiana imienia dziecka' is 10 minutes."                                    
+#&gt; [10] "Waiting time for 'M: Sprostowanie lub uzupełnienie aktu małżeństwa' is 10 minutes."             
+#&gt; [11] "Waiting time for 'M: Złożenie dokumentów i wydawanie zaświadczeń' is 10 minutes."               
+#&gt; [12] "Waiting time for 'A: Rejestracja noworodków' is 10 minutes."                                    
+#&gt; [13] "Waiting time for 'T: Rejestracja na podstawie zagranicznych dokumentów' is 10 minutes."         
+#&gt; [14] "Waiting time for 'T: Odbiór odpisu po rejestracji  zagranicznych dokumentów' is 10 minutes."    
+#&gt; [15] "Waiting time for 'W: Złożenie wniosku oraz odbiór zamówionych odpisów' is 10 minutes."          
+#&gt; [16] "Waiting time for 'X: Kasa' is 60 minutes."                                                      
+#&gt; [17] "Waiting time for 'C: Wydanie zaświadczenia o stanie cywilnym' is 60 minutes."                   
+#&gt; [18] "Waiting time for 'O: Uznanie ojcostwa przed urodzeniem się dziecka' is 10 minutes."             
+#&gt; [19] "Waiting time for 'T: Sprostowanie lub uzupełnienie aktu' is 10 minutes."                        </div><div class='input'>
+<span class='fu'>get_open_counters_verbose</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] "There are 0 open counters for T: Odbiór odpisu po sprostowaniu lub uzupełnieniu."            
+#&gt;  [2] "There are 1 open counters for Z: Zgłoszenie zgonu na podstawie karty zgonu."                 
+#&gt;  [3] "There are 3 open counters for P: Oświadczenie o powrocie do nazwiska noszonego przed ślubem."
+#&gt;  [4] "There are 0 open counters for S: Sprostowanie lub uzupełnienie aktu."                        
+#&gt;  [5] "There are 1 open counters for I: Zmiana imienia lub nazwiska w trybie administracyjnym."     
+#&gt;  [6] "There are 1 open counters for Z: Sprostowanie lub uzupełnienie aktu zgonu."                  
+#&gt;  [7] "There are 1 open counters for J: Zgłoszenie jubileuszu pożycia małżeńskiego."                
+#&gt;  [8] "There are 0 open counters for Sprostowanie lub uzupełnienie aktów."                          
+#&gt;  [9] "There are 2 open counters for D: Zmiana imienia dziecka."                                    
+#&gt; [10] "There are 1 open counters for M: Sprostowanie lub uzupełnienie aktu małżeństwa."             
+#&gt; [11] "There are 1 open counters for M: Złożenie dokumentów i wydawanie zaświadczeń."               
+#&gt; [12] "There are 0 open counters for A: Rejestracja noworodków."                                    
+#&gt; [13] "There are 0 open counters for T: Rejestracja na podstawie zagranicznych dokumentów."         
+#&gt; [14] "There are 0 open counters for T: Odbiór odpisu po rejestracji  zagranicznych dokumentów."    
+#&gt; [15] "There are 3 open counters for W: Złożenie wniosku oraz odbiór zamówionych odpisów."          
+#&gt; [16] "There are 0 open counters for X: Kasa."                                                      
+#&gt; [17] "There are 0 open counters for C: Wydanie zaświadczenia o stanie cywilnym."                   
+#&gt; [18] "There are 0 open counters for O: Uznanie ojcostwa przed urodzeniem się dziecka."             
+#&gt; [19] "There are 0 open counters for T: Sprostowanie lub uzupełnienie aktu."                        </div><div class='input'>
+<span class='fu'>get_current_ticket_number_verbose</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; [1] "Current ticket number is 0."</div><div class='input'>
 <span class='fu'>get_number_of_people_verbose</span>(<span class='no'>office</span>, <span class='no'>queue</span>)</div><div class='output co'>#&gt;  [1] "There are 0 people in T: Odbiór odpisu po sprostowaniu lub uzupełnieniu."            
 #&gt;  [2] "There are 0 people in Z: Zgłoszenie zgonu na podstawie karty zgonu."                 
 #&gt;  [3] "There are 0 people in P: Oświadczenie o powrocie do nazwiska noszonego przed ślubem."
@@ -220,7 +238,7 @@ You can get a list of possible values using <code><a href='get_available_queues.
 #&gt; [15] "There are 0 people in W: Złożenie wniosku oraz odbiór zamówionych odpisów."          
 #&gt; [16] "There are 0 people in X: Kasa."                                                      
 #&gt; [17] "There are 0 people in C: Wydanie zaświadczenia o stanie cywilnym."                   
-#&gt; [18] "There are 0 people in O: Uznanie ojcostwa przed urodzeniem się dziecka."             
+#&gt; [18] "There are 2 people in O: Uznanie ojcostwa przed urodzeniem się dziecka."             
 #&gt; [19] "There are 0 people in T: Sprostowanie lub uzupełnienie aktu."                        </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

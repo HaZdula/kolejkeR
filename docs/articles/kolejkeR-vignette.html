@@ -134,7 +134,7 @@
 <div id="getting-specific-data-directly" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-specific-data-directly" class="anchor"></a>5. Getting specific data directly</h2>
-<p>These functions are designed to get exact data quickly in form of a <code>character</code> vector of length 1. These are:</p>
+<p>These functions, vectorized over <code>queue_name</code>, are designed to get exact data quickly in form of a <code>character</code> vector of the same length as <code>queue_name</code>. These are:</p>
 <ul>
 <li><p><code><a href="../reference/get_waiting_time.html">get_waiting_time(office_name, queue_name)</a></code></p></li>
 <li><p><code><a href="../reference/get_waiting_time.html">get_open_counters(office_name, queue_name)</a></code></p></li>
@@ -145,7 +145,7 @@
 <div id="getting-specific-data-verbosely" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-specific-data-verbosely" class="anchor"></a>6. Getting specific data verbosely</h2>
-<p>These functions are designed to get exact data quickly in form of a user-friendly statement. Each of them returns a <code>character</code> sentence, depending the question called. These are:</p>
+<p>These functions, vectorized over <code>queue_name</code>, are designed to get exact data quickly in form of a user-friendly statement. Each of them returns a <code>character</code> vector of the same length as <code>queue_name</code>, with each element in a form of a sentence , depending the question called. These are:</p>
 <ul>
 <li><p><code><a href="../reference/get_waiting_time.html">get_waiting_time(office_name, queue_name, language = 'en')</a></code></p></li>
 <li><p><code><a href="../reference/get_waiting_time.html">get_open_counters(office_name, queue_name, language = 'en')</a></code></p></li>
