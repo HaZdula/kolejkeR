@@ -65,21 +65,33 @@ The function returns a `data.frame` with following columns:
 
 * `get_available_queues(office_name)` returns names of queues in the chosen municipal office in Warsaw, accepted as `queue_name` arguments in other functions.
 
-## 5. Getting specific data in informative strings
+## 5. Getting specific data directly
 
-These functions are designed to get exact data quickly in form of a user-friendly statement. Each of them returns a `character` sentence, depending the question called. These are:
+These functions, vectorized over `queue_name`, are designed to get exact data quickly in form of a `character` vector of the same length as `queue_name`. These are:
 
-* `get_waiting_time(office_name, queue_name, polish = FALSE)`
+* `get_waiting_time(office_name, queue_name)`
 
-* `get_open_counters(office_name, queue_name, polish = FALSE)`
+* `get_open_counters(office_name, queue_name)`
 
-* `get_current_ticket_number(office_name, queue_name, polish = FALSE)`
+* `get_current_ticket_number(office_name, queue_name)`
 
-* `get_number_of_people(office_name, queue_name, polish = FALSE)`.
+* `get_number_of_people(office_name, queue_name)`.
 
-The `polish` variable regards the desired language of the output. If it's `FALSE`, it will be in English. Jeśli jej wartość wynosi `TRUE`, będzie po polsku.
+## 6. Getting specific data verbosely
 
-## 6. Example
+These functions, vectorized over `queue_name`, are designed to get exact data quickly in form of a user-friendly statement. Each of them returns a `character` vector of the same length as `queue_name`, with each element in a form of a sentence , depending the question called. These are:
+
+* `get_waiting_time(office_name, queue_name, language = 'en')`
+
+* `get_open_counters(office_name, queue_name, language = 'en')`
+
+* `get_current_ticket_number(office_name, queue_name, language = 'en')`
+
+* `get_number_of_people(office_name, queue_name, language = 'en')`.
+
+The `language` variable regards the desired language of the output. Currently the only supported languages are English and Polish.
+
+## 7. Example
 
 Let's assume, that you would like to file an application for 500+ programme in municipal office in Bielany in Warsaw. You wish to find out the average time you need to wait and the amount of people already waiting.
 
@@ -96,8 +108,8 @@ queues <- get_available_queues(Bielany_office)
 # Find the exact name of the queue
 queue500 <- queues[stri_detect_fixed(queues, "500+")][1]
 
-print(get_waiting_time(Bielany_office, queue500))
-print(get_number_of_people(Bielany_office, queue500))
+print(get_waiting_time_verbose(Bielany_office, queue500, language = 'pl'))
+print(get_number_of_people_verbose(Bielany_office, queue500, language = 'pl'))
 
 ```
 Now you can go to the municipal office with a big smile on your face.

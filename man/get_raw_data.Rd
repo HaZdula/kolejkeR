@@ -33,5 +33,7 @@ office <- get_available_offices()[1]
 get_raw_data(office)
 }
 \seealso{
-\code{\link[kolejkeR]{get_waiting_time}} and others for extracting specific data.
+\code{\link[kolejkeR]{get_waiting_time}} and others to extract data directly.
+
+\code{\link[kolejkeR]{get_waiting_time_verbose}} and others for a more verbose output.
 }
