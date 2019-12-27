@@ -22,10 +22,11 @@ Description: An R wrapper to convieniently access the Warsaw Open Queue Data (Sy
     In many methods, an output in polish is available. 
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Depends: R (>= 2.10)
 Suggests: 
     testthat,
+    httptest,
     stringr,
     spelling,
     knitr,
@@ -33,9 +34,6 @@ Suggests:
 Imports: 
     curl,
     jsonlite,
-    magrittr,
-    tidyr,
-    httptest,
     glue
 Language: en-US
 VignetteBuilder: knitr

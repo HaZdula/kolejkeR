@@ -32,7 +32,7 @@ get_raw_data <- function(office_name) {
 #' @examples offices <- get_available_offices()
 #' @export 
 get_available_offices <- function() {
-  office_ids[["office"]]
+  names(office_ids_list)
 }
 
 

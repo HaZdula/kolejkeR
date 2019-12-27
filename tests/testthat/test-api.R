@@ -16,7 +16,7 @@ testset <- list(
 httptest::with_mock_api({
   test_that("get_available_offices works correctly", {
     result <- get_available_offices()
-    expected <- office_ids[["office"]]
+    expected <- names(office_ids_list)
     expect_equal(result, expected)
   })
 })

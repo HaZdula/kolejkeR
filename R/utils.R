@@ -1,9 +1,8 @@
-library(magrittr)
-
 base_url <- "https://api.um.warszawa.pl/api/action/wsstore_get"
 
 get_district_id <- function(district_name) {
-  district_id <- office_ids[["id"]][grep(district_name, office_ids[["office"]], ignore.case = TRUE)]
+  district_id_list <- office_ids_list[grep(district_name, names(office_ids_list), ignore.case = TRUE, value = TRUE)]
+  district_id <- unlist(district_id_list, use.names = FALSE)
   if(length(district_id) == 0){
     district_id <- NULL
   }
@@ -60,8 +59,5 @@ counters_to_string <- function() {
 # 3-5 - stanowiska są otwarte w
 # 6-10 - stanowisk jest otwartych w
 
-office_ids <- office_ids_list %>% 
-  data.frame() %>%
-  tidyr::gather(key = 'office', value = 'id')
-  # Może tidyr::pivot_longer() ?
+
 

@@ -16,6 +16,7 @@ A function, that returns available office names to pass down to other methods.
 offices <- get_available_offices()
 }
 \seealso{
-Other {getters}: \code{\link{get_available_queues}}
+Other {getters}: 
+\code{\link{get_available_queues}()}
 }
 \concept{{getters}}
