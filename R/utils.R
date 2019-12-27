@@ -60,4 +60,18 @@ counters_to_string <- function() {
 # 6-10 - stanowisk jest otwartych w
 
 
+get_all_data_with_time <- function() {
+  all_data <- lapply(office_ids_list, function(id){
+    request_url <- get_request_url(id)
+    result <- jsonlite::fromJSON(request_url)[[1]]
+    time <- result[["time"]]
+    date <- result[["date"]]
+    groups <- result[["grupy"]]
+    cbind(time, date, groups)
+  })
+  data_with_names <- Map(function(name, data){
+    cbind(name,data)
+  }, names(all_data), all_data)
+  as.data.frame(Reduce(rbind, data_with_names))
+}
 

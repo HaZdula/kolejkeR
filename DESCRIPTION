@@ -32,7 +32,6 @@ Suggests:
     knitr,
     rmarkdown
 Imports: 
-    curl,
     jsonlite,
     glue
 Language: en-US

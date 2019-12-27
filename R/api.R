@@ -220,3 +220,12 @@ get_number_of_people_verbose <- function(office_name, queue_name, language = 'en
   })
 }
 
+#' @title Dump data to csv
+#' @description Dumps data from Warsaw queue api from all offices to csv file
+#' @param filename \code{character} filename for resulting csv, should include file extension
+#' 
+#' @export 
+append_api_data_to_csv <- function(filename) {
+  queue_data <- get_all_data_with_time()
+  utils::write.table(queue_data, filename, sep = ",", col.names = !file.exists(filename), append = T, row.names = FALSE)
+}
