@@ -19,23 +19,20 @@ ui <- fluidPage(
             actionButton("submit", label = "Print results")
         ),
         mainPanel(
-            helper(textOutput("result1")),
-            textOutput("result2"),
-            textOutput("result3")
-        
-        #    tabsetPanel(type = "tabs",
-        #                tabPanel("Plot", 
-        #                    helper(textOutput("result1")),
-        #                    textOutput("result2"),
-        #                    textOutput("result3")),
-        #                tabPanel("Summary", helper(textOutput("result1"))),
-        #                tabPanel("Table", helper(textOutput("result1")))
-        #    )
+            # helper(textOutput("result1")),
+            # textOutput("result2"),
+            # textOutput("result3")
+            tabsetPanel(
+                        tabPanel("Plot",
+                            textOutput("result1"),
+                            textOutput("result2"),
+                            textOutput("result3")),
+                        tabPanel("Summary", textOutput("result4")),
+                        tabPanel("Table", textOutput("result5"))
+            )
         )
     )
 )
-
-
 
 server <- function(input, output, session) {
     
@@ -66,6 +63,8 @@ server <- function(input, output, session) {
     output$result1 <- renderText(results$res1)
     output$result2 <- renderText(results$res2)
     output$result3 <- renderText(results$res3)
+    output$result4 <- renderText("Summary")
+    output$result5 <- renderText("Table")
 }
 
 shinyApp(ui = ui, server = server)
