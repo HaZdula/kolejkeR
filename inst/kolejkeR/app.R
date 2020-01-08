@@ -36,7 +36,7 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-    
+    choices <- reactiveVal()
 #    observe({
 #        validate({need(input$of,"Select office")})
 #        input$of
@@ -45,8 +45,10 @@ server <- function(input, output, session) {
 #        })
 #    })
     observe({
+        input$of
+        choices(kolejkeR::get_available_queues(input$of))
         updateSelectizeInput(session, "queue", "Select available queue", 
-                          choices = kolejkeR::get_available_queues(input$of))
+                          choices = choices())
     })
     # observe({
     #     validate({
@@ -56,7 +58,7 @@ server <- function(input, output, session) {
     #     })
     results <- reactiveValues(res1="", res2="", res3="")
     observeEvent(input$submit,{
-        # input$of
+        if(!input$queue %in% choices()) return()
         results$res1 <- kolejkeR::get_current_ticket_number_verbose(input$of,input$queue)
         results$res2 <- kolejkeR::get_number_of_people_verbose(input$of,input$queue)
         results$res3 <- kolejkeR::get_waiting_time_verbose(input$of,input$queue)
