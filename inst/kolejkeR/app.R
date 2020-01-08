@@ -45,7 +45,6 @@ server <- function(input, output, session) {
 #        })
 #    })
     observe({
-        input$of
         choices(kolejkeR::get_available_queues(input$of))
         updateSelectizeInput(session, "queue", "Select available queue", 
                           choices = choices())
@@ -63,7 +62,7 @@ server <- function(input, output, session) {
         results$res1 <- kolejkeR::get_current_ticket_number_verbose(input$of,input$queue)
         results$res2 <- kolejkeR::get_number_of_people_verbose(input$of,input$queue)
         results$res3 <- kolejkeR::get_waiting_time_verbose(input$of,input$queue)
-    }
+        }
     )
     output$result1 <- renderText(results$res1)
     output$result2 <- renderText(results$res2)
