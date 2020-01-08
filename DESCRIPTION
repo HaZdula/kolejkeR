@@ -36,6 +36,9 @@ Imports:
     magrittr,
     tidyr,
     httptest,
-    glue
+    glue,
+    shiny,
+    shinycssloaders,
+    shinyhelper
 Language: en-US
 VignetteBuilder: knitr
