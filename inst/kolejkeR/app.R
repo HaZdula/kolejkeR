@@ -15,12 +15,13 @@ ui <- fluidPage(
                         "Select office",
                         choices = offices)),
             #conditionalPanel(condition = "typeof input.of === 'undefined' || input.of == null", uiOutput("Queue"))
-            uiOutput("Queue")
+            htmlOutput("Queue"),
+            actionButton("submit", label = "Print results")
         ),
         mainPanel(
             helper(textOutput("result1")),
             textOutput("result2"),
-            textOutput("result3"),
+            textOutput("result3")
         
         #    tabsetPanel(type = "tabs",
         #                tabPanel("Plot", 
@@ -48,17 +49,23 @@ server <- function(input, output, session) {
     output$Queue <- renderUI({
         selectInput("queue", "Select available queue", choices = kolejkeR::get_available_queues(input$of))
     })
-    observe({
-        validate({
-            need(input$of, "Select office")
-            need(input$queue, "Select queue")
-        })
-        input$of
-        output$result1 <- renderText(kolejkeR::get_current_ticket_number_verbose(input$of,input$queue))
-        output$result2 <- renderText(kolejkeR::get_number_of_people_verbose(input$of,input$queue))
-        output$result3 <- renderText(kolejkeR::get_waiting_time_verbose(input$of,input$queue))
+    # observe({
+    #     validate({
+    #         need(input$of, "Select office")
+    #         need(input$queue, "Select queue")
+    #         need(input$submit, label = "Click the button")
+    #     })
+    results <- reactiveValues(res1="", res2="", res3="")
+    observeEvent(input$submit,{
+        # input$of
+        results$res1 <- kolejkeR::get_current_ticket_number_verbose(input$of,input$queue)
+        results$res2 <- kolejkeR::get_number_of_people_verbose(input$of,input$queue)
+        results$res3 <- kolejkeR::get_waiting_time_verbose(input$of,input$queue)
     }
     )
+    output$result1 <- renderText(results$res1)
+    output$result2 <- renderText(results$res2)
+    output$result3 <- renderText(results$res3)
 }
 
 shinyApp(ui = ui, server = server)
