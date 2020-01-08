@@ -15,7 +15,7 @@ ui <- fluidPage(
                         "Select office",
                         choices = offices)),
             #conditionalPanel(condition = "typeof input.of === 'undefined' || input.of == null", uiOutput("Queue"))
-            #htmlOutput("Queue"),
+            # dzięki selectizeInput mamy autocomplete, ale trzeba obsłużyć brzydkie inputy
             helper(selectizeInput("queue", "Select available queue", choices = "")),
             actionButton("submit", label = "Print results")
         ),
@@ -56,6 +56,7 @@ server <- function(input, output, session) {
     #         need(input$queue, "Select queue")
     #         need(input$submit, label = "Click the button")
     #     })
+    #})
     results <- reactiveValues(res1="", res2="", res3="")
     observeEvent(input$submit,{
         if(!input$queue %in% choices()) return()
