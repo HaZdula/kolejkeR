@@ -16,7 +16,7 @@ ui <- fluidPage(
                         choices = offices)),
             #conditionalPanel(condition = "typeof input.of === 'undefined' || input.of == null", uiOutput("Queue"))
             #htmlOutput("Queue"),
-            helper(selectInput("queue", "Select available queue", choices = "")),
+            helper(selectizeInput("queue", "Select available queue", choices = "")),
             actionButton("submit", label = "Print results")
         ),
         mainPanel(
@@ -45,7 +45,8 @@ server <- function(input, output, session) {
 #        })
 #    })
     observe({
-        updateSelectInput(session, "queue", "Select available queue", choices = kolejkeR::get_available_queues(input$of))
+        updateSelectizeInput(session, "queue", "Select available queue", 
+                          choices = kolejkeR::get_available_queues(input$of))
     })
     # observe({
     #     validate({
