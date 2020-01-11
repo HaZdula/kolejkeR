@@ -33,6 +33,9 @@ Suggests:
     rmarkdown
 Imports: 
     jsonlite,
-    glue
+    glue,
+    shiny,
+    shinycssloaders,
+    shinyhelper
 Language: en-US
 VignetteBuilder: knitr
