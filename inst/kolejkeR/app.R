@@ -2,7 +2,7 @@ library(shiny)
 library(kolejkeR)
 library(shinycssloaders)
 library(shinyhelper)
-
+library(DT)
 offices <- kolejkeR::get_available_offices()
 
 ui <- fluidPage(
@@ -28,9 +28,9 @@ ui <- fluidPage(
                             textOutput("result1"),
                             textOutput("result2"),
                             textOutput("result3")),
-                        tabPanel("Summary", textOutput("result4")),
-                        tabPanel("Table", textOutput("result5"))
-            )
+                        tabPanel("Table", DTOutput("result4")),
+                        tabPanel("Summary", textOutput("result5"))
+                        )
         )
     )
 )
@@ -62,13 +62,14 @@ server <- function(input, output, session) {
         results$res1 <- kolejkeR::get_current_ticket_number_verbose(input$of,input$queue)
         results$res2 <- kolejkeR::get_number_of_people_verbose(input$of,input$queue)
         results$res3 <- kolejkeR::get_waiting_time_verbose(input$of,input$queue)
+        results$res4 <- kolejkeR::get_raw_data(input$of)
         }
     )
     output$result1 <- renderText(results$res1)
     output$result2 <- renderText(results$res2)
     output$result3 <- renderText(results$res3)
-    output$result4 <- renderText("Summary")
-    output$result5 <- renderText("Table")
+    output$result4 <- renderDT(results$res4)
+    output$result5 <- renderText("Summary")
 }
 
 shinyApp(ui = ui, server = server)
