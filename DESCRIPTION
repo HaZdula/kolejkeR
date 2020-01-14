@@ -39,6 +39,7 @@ Imports:
     glue,
     shiny,
     shinycssloaders,
-    shinyhelper
+    shinyhelper,
+    shiny.i18n
 Language: en-US
 VignetteBuilder: knitr
