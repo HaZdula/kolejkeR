@@ -17,7 +17,7 @@ Authors@R: c(person(given = "Hanna",
                     family = "Morgen",
                     role = "aut"))
 Maintainer: Hanna Zdulska <zdulskah@student.mini.pw.edu.com>
-Description: An R wrapper to convieniently access the Warsaw Open Queue Data (Systemy Kolejkowe Otwartych Danych Warszawskich).
+Description: An R wrapper to conveniently access the Warsaw Open Queue Data (Systemy Kolejkowe Otwartych Danych Warszawskich).
     Provides a few functions both suitable for further data processing and to quick, user-friendly access to data. 
     In many methods, an output in polish is available. 
 License: MIT + file LICENSE
