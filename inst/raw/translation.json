@@ -1,0 +1,13 @@
+{
+  "languages": ["en", "pl"],
+  "translation": [
+      {"en": "Select office", "pl": "Wybierz urząd"},
+      {"en": "Select available queue", "pl": "Wybierz kolejkę"},
+      {"en": "Print results", "pl": "Wypisz wyniki"},
+      {"en": "Current state", "pl": "Obecny stan"},
+      {"en": "Table", "pl": "Tabela"},
+      {"en": "Predictions", "pl": "Przewidywania"},
+      {"en": "Summary", "pl": "Podsumowanie"}
+      
+    ]
+}

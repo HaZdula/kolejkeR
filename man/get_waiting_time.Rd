@@ -24,7 +24,7 @@ get_number_of_people(office_name, queue_name)
 You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.}
 }
 \value{
-A \code{character} vector (unless specified diffrently below) of the same length as \code{queue_name}, containing the information dependent on the called function.
+A \code{character} vector (unless specified differently below) of the same length as \code{queue_name}, containing the information dependent on the called function.
 
 If \code{get_waiting_time} is called: A \code{numeric} vector with estimated time of waiting in the queues, in minutes.
 

@@ -37,7 +37,7 @@ The city hall of Warsaw made a variety of data public [here](https://api.um.wars
 
 One of the datasets contains the information about queues in municipal offices in Warsaw, ie. expected times, open counters and amount of people waiting. 
 
-`kolejkeR` is an R wrapper around the API, developed as a project for Advanced R classes at the Warsaw University of Technology. It's suitable both for futher data processing and analysis, as well as for quick aquirement of information helpful for everyday life in Warsaw.
+`kolejkeR` is an R wrapper around the API, developed as a project for Advanced R classes at the Warsaw University of Technology. It's suitable both for further data processing and analysis, as well as for quick acquirement of information helpful for everyday life in Warsaw.
 
 ## 3. The main function
 
