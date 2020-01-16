@@ -9,7 +9,7 @@ offices <- kolejkeR::get_available_offices()
 # https://stackoverflow.com/questions/47750273/shiny-application-get-browser-language-settings
 library(shiny.i18n)
 i18n <- Translator$new(translation_json_path = "../raw/translation.json")
-lang <- "pl"
+lang <- "en"
 i18n$set_translation_language(lang)
 
 ui <- fluidPage(
