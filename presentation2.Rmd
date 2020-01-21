@@ -5,7 +5,6 @@ date: "23/01/2020"
 output:
   ioslides_presentation:
     fullscreen: true
-    smaller: true
     print_df: paged
 ---
 
@@ -14,29 +13,37 @@ knitr::opts_chunk$set(echo = TRUE,
                       eval = FALSE)
 ```
 
-## Get access to data regarding queues in municipal offices in Warsaw
+## Get access to data regarding queues in municipal offices in Warsaw {.smaller}
 
 The city hall of Warsaw made a variety of data public [here](https://api.um.warszawa.pl). Everyone is welcome to access the data via API, using JSON file format. One of the datasets contains the information about queues in municipal offices in Warsaw, ie. expected times, open counters and amount of people waiting. 
 
 `kolejkeR` is an R wrapper around the API, developed as a project for Advanced R classes at the Warsaw University of Technology. It's suitable both for futher data processing and analysis, as well as for quick aquirement of information helpful for everyday life in Warsaw.
 
-## What's new?
+## Whats new? {.incremental}
 
-* SHINY !!!
-* Dataset of archived data for your own exploration
-* Model for predictions
+> - SHINY
+> - Dataset of archived data for your own exploration
+> - Model for predictions
 
 ## Shiny
 
+[ShinyApps](https://sowiks2711.shinyapps.io/kolejkershiny/)
+
+![](https://rtask.thinkr.fr/wp-content/uploads/thinkr-hex-golem2-260x300.png)
+
 ## Dataset
+
+TO DO
 
 ## Model
 
-## Example - TO DO
+TO DO
+
+## Example {.smaller}
 
 Let's assume, that you would like to file an application for 500+ programme in municipal office in Bielany in Warsaw. You wish to find out the average time you need to wait and the amount of people already waiting.
 
-``` {r}
+``` {r, eval=FALSE}
 library(kolejkeR)
 library(stringi)
 
