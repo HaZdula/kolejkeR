@@ -1,5 +1,3 @@
-library(magrittr)
-
 base_url <- "https://api.um.warszawa.pl/api/action/wsstore_get"
 
 get_district_id <- function(district_name) {
@@ -61,8 +59,6 @@ counters_to_string <- function() {
 # 6-10 - stanowisk jest otwartych w
 
 office_ids <- suppressWarnings({
-  office_ids_list %>% 
-  data.frame() %>%
-  tidyr::gather(key = 'office', value = 'id')
+  tidyr::gather(data.frame(office_ids_list),key = 'office', value = 'id')
 })
 
