@@ -23,8 +23,9 @@ The city hall of Warsaw made a variety of data public [here](https://api.um.wars
 
 > - SHINY
 > - AppVeyor
-> - Reduced dependencies
+> - Amount of dependencies reduced
 > - Dataset of archived data for your own exploration
+> - New function for collecting all data
 > - Model for predictions
 
 ## Shiny
@@ -33,9 +34,36 @@ The city hall of Warsaw made a variety of data public [here](https://api.um.wars
 
 ![](https://rtask.thinkr.fr/wp-content/uploads/thinkr-hex-golem2-260x300.png)
 
+## Reduced amount of dependencies
+
+**Imports:** 
+
+ * **jsonlite**
+ * **glue**
+
+Suggests: 
+
+ * testthat
+ * httptest
+ * stringr
+ * spelling
+ * knitr
+ * rmarkdown
+
+
 ## Dataset
 
 TO DO
+
+## New function
+
+```{r eval=FALSE}
+###<b>
+append_api_data_to_csv(filename)
+###</b>
+```
+1. Collects data from Warsaw queue api from all offices
+2. Writes it to csv file
 
 ## Model
 
