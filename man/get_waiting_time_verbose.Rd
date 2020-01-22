@@ -23,7 +23,7 @@ get_number_of_people_verbose(office_name, queue_name, language = "en")
 \item{queue_name}{A \code{character} describing a queue we are interested in.
 You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.}
 
-\item{language}{A \code{character}. Only two languages supported: english (\code{"en"}) and polish (\code{"pl"}).}
+\item{language}{A \code{character}. Only two languages supported: English (\code{"en"}) and Polish (\code{"pl"}).}
 }
 \value{
 A \code{character} vector of the same length as \code{queue_name} with each element in format depending on the called function and the variable \code{language}. Below we assume, that \code{language} variable is default.

@@ -3,6 +3,7 @@ The kolejkeR package is an R wrapper for the Otwarte dane po warszawsku (Open Wa
 
 [![Travis build status](https://travis-ci.org/HaZdula/kolejkeR.svg?branch=master)](https://travis-ci.org/HaZdula/kolejkeR)
 [![Coverage status](https://codecov.io/gh/HaZdula/kolejkeR/branch/master/graph/badge.svg)](https://codecov.io/gh/HaZdula/kolejkeR?branch=master)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/HaZdula/kolejkeR?branch=master&svg=true)](https://ci.appveyor.com/project/HaZdula/kolejkeR)
 
 ## Installation
 

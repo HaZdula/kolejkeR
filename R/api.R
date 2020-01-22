@@ -59,7 +59,7 @@ get_available_queues <- function(office_name) {
 #' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 #' amount of people in a set of specific queues in specified office.
 #' @describeIn get_waiting_time Returns expected time to be served.
-#' @return A \code{character} vector (unless specified diffrently below) of the same length as \code{queue_name}, containing the information dependent on the called function.
+#' @return A \code{character} vector (unless specified differently below) of the same length as \code{queue_name}, containing the information dependent on the called function.
 #' 
 #' If \code{get_waiting_time} is called: A \code{numeric} vector with estimated time of waiting in the queues, in minutes.
 #' @examples office <- get_available_offices()[1]
@@ -89,7 +89,7 @@ get_waiting_time <- function(office_name, queue_name) {
 #' @param queue_name A \code{character} describing a queue we are interested in.
 
 #' You can get a list of possible values using \code{\link[kolejkeR]{get_available_queues}} function.
-#' @param language A \code{character}. Only two languages supported: english (\code{"en"}) and polish (\code{"pl"}).
+#' @param language A \code{character}. Only two languages supported: English (\code{"en"}) and Polish (\code{"pl"}).
 #' @description Several functions to get specific data, such as waiting time, open encounters, current ticket number and
 #' amount of people in a set of specified queues in specified office.
 #' @describeIn get_waiting_time_verbose Returns expected time to be served.
