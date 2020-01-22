@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = FALSE
 )
+knitr::opts_chunk$set(fig.width=12, fig.height=8) 
+source("preprocessing.R")
 ```
 
 
@@ -28,7 +30,8 @@ You can install the development version from
 
 ``` {r installation}
 # install.packages("devtools")
-devtools::install_github("HaZdula/kolejkeR")
+#devtools::install_github("HaZdula/kolejkeR")
+library(kolejkeR)
 ```
 
 ## 2. Get access to data regarding queues in municipal offices in Warsaw
@@ -113,4 +116,39 @@ print(get_number_of_people_verbose(Bielany_office, queue500, language = 'pl'))
 
 ```
 Now you can go to the municipal office with a big smile on your face.
+
+## 8. Dataset
+
+## 9. Dataset analysis
+
+``` {r, echo = TRUE, eval = TRUE}
+#source("preprocessing.R")
+
+plot_avg_served_people_per_day()
+plot_avg_queue_len()
+plot_common_week_data()
+plot_served_people_office_queue()
+plot_queue_len_office_queue()
+queue_efficiency_map()
+# Graph showing how nr of served people grows for different time slots and dates
+wrap_plot_queues(mokotow_658_queue, 
+                 `Served people`)
+
+# Graph showing how nr of queued people changes for different time slots and dates
+wrap_plot_queues(mokotow_658_queue, 
+                 `Queue length`)
+
+wrap_plot_queues(praga_poludnie_165_queue, 
+                 `Served people`)
+
+# Graph showing how nr of queued people changes for different time slots and dates
+wrap_plot_queues(praga_poludnie_165_queue, 
+                 `Queue length`)
+plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Bemowo", "551", "2020-01-13")
+plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Bielany", "171", "2020-01-13")
+plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Ochota", "599", "2020-12-30")
+plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Mokotow_1", "658", "2020-12-30")
+
+```
+
 
