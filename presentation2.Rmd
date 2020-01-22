@@ -22,6 +22,8 @@ The city hall of Warsaw made a variety of data public [here](https://api.um.wars
 ## Whats new? {.incremental}
 
 > - SHINY
+> - AppVeyor
+> - Reduced dependencies
 > - Dataset of archived data for your own exploration
 > - Model for predictions
 
@@ -38,6 +40,7 @@ TO DO
 ## Model
 
 TO DO
+
 
 ## Example {.smaller}
 
