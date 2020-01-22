@@ -30,7 +30,15 @@ Suggests:
     stringr,
     spelling,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2,
+    dplyr,
+    rlang,
+    tidyr,
+    hms,
+    ggrepel,
+    pals,
+    kolejkeR
 Imports: 
     jsonlite,
     glue

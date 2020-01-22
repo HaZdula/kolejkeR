@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = FALSE
 )
-knitr::opts_chunk$set(fig.width=12, fig.height=8) 
+knitr::opts_chunk$set(fig.width=10, fig.height=6) 
 source("preprocessing.R")
 ```
 
