@@ -22,6 +22,7 @@ office <- get_available_offices()[1]
 get_available_queues(office)
 }
 \seealso{
-Other {getters}: \code{\link{get_available_offices}}
+Other {getters}: 
+\code{\link{get_available_offices}()}
 }
 \concept{{getters}}

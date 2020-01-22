@@ -1,7 +1,8 @@
 base_url <- "https://api.um.warszawa.pl/api/action/wsstore_get"
 
 get_district_id <- function(district_name) {
-  district_id <- office_ids[["id"]][grep(district_name, office_ids[["office"]], ignore.case = TRUE)]
+  district_id_list <- office_ids_list[grep(district_name, names(office_ids_list), ignore.case = TRUE, value = TRUE)]
+  district_id <- unlist(district_id_list, use.names = FALSE)
   if(length(district_id) == 0){
     district_id <- NULL
   }
@@ -58,7 +59,19 @@ counters_to_string <- function() {
 # 3-5 - stanowiska są otwarte w
 # 6-10 - stanowisk jest otwartych w
 
-office_ids <- suppressWarnings({
-  tidyr::gather(data.frame(office_ids_list),key = 'office', value = 'id')
-})
+
+get_all_data_with_time <- function() {
+  all_data <- lapply(office_ids_list, function(id){
+    request_url <- get_request_url(id)
+    result <- jsonlite::fromJSON(request_url)[[1]]
+    time <- result[["time"]]
+    date <- result[["date"]]
+    groups <- result[["grupy"]]
+    cbind(time, date, groups)
+  })
+  data_with_names <- Map(function(name, data){
+    cbind(name,data)
+  }, names(all_data), all_data)
+  as.data.frame(Reduce(rbind, data_with_names))
+}
 
