@@ -37,8 +37,7 @@ Suggests:
     tidyr,
     hms,
     ggrepel,
-    pals,
-    kolejkeR
+    pals
 Imports: 
     jsonlite,
     glue
