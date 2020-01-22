@@ -11,8 +11,7 @@ get_waiting_time_verbose(office_name, queue_name, language = "en")
 
 get_open_counters_verbose(office_name, queue_name, language = "en")
 
-get_current_ticket_number_verbose(office_name, queue_name,
-  language = "en")
+get_current_ticket_number_verbose(office_name, queue_name, language = "en")
 
 get_number_of_people_verbose(office_name, queue_name, language = "en")
 }
