@@ -36,9 +36,9 @@ The city hall of Warsaw made a variety of data public [here](https://api.um.wars
 
 ## Shiny
 
-[ShinyApps](https://sowiks2711.shinyapps.io/kolejkershiny/)
-
 ![](https://rtask.thinkr.fr/wp-content/uploads/thinkr-hex-golem2-260x300.png)
+
+[ShinyApps](https://sowiks2711.shinyapps.io/kolejkershiny/)
 
 ## Reduced amount of dependencies
 
@@ -46,15 +46,6 @@ The city hall of Warsaw made a variety of data public [here](https://api.um.wars
 
  * **jsonlite**
  * **glue**
-
-Suggests: 
-
- * testthat
- * httptest
- * stringr
- * spelling
- * knitr
- * rmarkdown
 
 
 ## Dataset {.smaller}
@@ -65,7 +56,7 @@ data("warsaw_queues")
 ```
 ```{r dataset_head, echo=FALSE}
 kable(head(warsaw_queues)) %>% 
-kable_styling(c("striped", "hover", "condensed", "responsive")) %>%
+#kable_styling(c("striped", "hover", "condensed", "responsive")) %>%
 scroll_box(width = "100%")
 ```
 
