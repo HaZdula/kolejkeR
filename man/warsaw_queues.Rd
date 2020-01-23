@@ -4,9 +4,9 @@
 \name{warsaw_queues}
 \alias{warsaw_queues}
 \title{Warsaw queues data collected from December 28 to January 22}
-\format{A data frame with 53940 rows and 10 variables:
+\format{A data frame with 830172 rows and 12 variables:
 \describe{
-  \item{aktualnyNumer}{Number of a served person on a given day}
+  \item{aktualnyNumer}{Ticket number of a served person on a given day}
   \item{czasObslugi}{Approximate time of service for one person}
   \item{date}{Date returned by the API}
   \item{idGrupy}{Identifier of a queue}
