@@ -442,31 +442,72 @@ Now you can go to the municipal office with a big smile on your face.
 
 ## 8. Dataset
 
+Package function were used to gather data about queues in Warsaw's government offices. Data was collected on the span of couple of weeks from December 28 to January 22.
+Warsaw's office API was called repeatedly every 5 minutes and results appended to csv file. KolejkeR package includes this dataset in a form of a data frame with 830172 rows and 12 variables. Uncompressed csv file with dataset takes 84.3 MB of memory.
+
 ## 9. Dataset analysis
+
+Script included to vignettes folder in the package stores some data analysis of the dataset. Libraries used for analysis and plotting graph are added to suggested dependencies. Results of the analysis are presented below.
+
 
 ``` {r, echo = FALSE, eval = TRUE}
 plot_avg_served_people_per_day()
 ```
+
+
+Above plot shows how many people are served in Warsaw offices every day on average.
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 plot_avg_queue_len()
 ```
+
+
+This graph shows the length of the queues in Warsaw's offices. Office with longest queues on average has very small number of dedicated queues and is the second office in the same district.  
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 plot_common_week_data()
 ```
+
+
+Average queue lengths for different weekdays show that on average people tend to go to offices slightly more often on the beginning of the week. That maybe because some offices work longer at the begging of the week and longer working hours draw more people.
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 plot_served_people_office_queue()
 ```
+
+
+Number of served people every day depends strongly on the queue objective and office.
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 plot_queue_len_office_queue()
 ```
+
+
+On average longest queues are for vehicle registrations.
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 queue_efficiency_map()
 ```
+
+
+Map queue objective description on mean queue length and average number of served people per day shows efficiency of given serving booths. Despite long queues relatively small number of people is served for vehicle registration and other labelled queues. This indicates processes that take long time to achieve in the offices. 
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 # Graph showing how nr of served people grows for different time slots and dates
 wrap_plot_queues(mokotow_658_queue, 
                  `Served people`)
 ```
+
+
+Growth of served people over time for example queue for couple of different dates shows linearity.
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 
 # Graph showing how nr of queued people changes for different time slots and dates
@@ -474,29 +515,52 @@ wrap_plot_queues(mokotow_658_queue,
                  `Queue length`)
 
 ```
+
+
+Changes of queue length for sample queue show more interesting relationships. Queues for this queue were longer in afternoon hours. Monday (2020-01-13) was the most popular weekday. 
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 wrap_plot_queues(praga_poludnie_165_queue, 
                  `Served people`)
 
 ```
+
+
+The same graph for vehicle registration show that this process takes much longer to serve single person in the queue.
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 # Graph showing how nr of queued people changes for different time slots and dates
 wrap_plot_queues(praga_poludnie_165_queue, 
                  `Queue length`)
 ```
+
+
+For the more popular queue people tend to come mostly before noon.
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Bemowo", "551", "2020-01-13")
 ```
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Bielany", "171", "2020-01-13")
 ```
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Ochota", "599", "2020-12-30")
 ```
+
+
 ``` {r, echo = FALSE, eval = TRUE}
 plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Mokotow_1", "658", "2020-12-30")
 ```
 
-```
 
+Plots showing distribution of waiting time for people that come in different hours show that waiting time for serving queuers is non-obvious and traces individual characteristics for different queues.
+This plots were created with assumption that ticket nr indicates how many people were served for given moment and no one is leaving queue before getting ticket and being served. 
+Blank columns indicate that this assumption not always holds. Especially for queues were many serving booths were active ticket nr tends to grow slower than queue length reduction.
 
