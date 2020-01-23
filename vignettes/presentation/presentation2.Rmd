@@ -1,5 +1,5 @@
 ---
-title: "kolejkeR"
+title: "kolejkeR 1.1"
 author: "Paweł Morgen, Jakub Pingielski, Sebastian Sowik, Hanna Zdulska"
 date: "23/01/2020"
 output:
@@ -9,8 +9,14 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,
-                      eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
+
+library(kolejkeR)
+library(kableExtra)
+library(knitr)
+library(dplyr)
+library(ggplot2)
+
 ```
 
 ## Get access to data regarding queues in municipal offices in Warsaw {.smaller}
@@ -51,9 +57,17 @@ Suggests:
  * rmarkdown
 
 
-## Dataset
+## Dataset {.smaller}
 
-TO DO
+830k obserwations, 2019-12-28 to 2020-01-22, 8:00 - 19:00. Documented
+```{r dataset_example, eval=TRUE}
+data("warsaw_queues")
+```
+```{r dataset_head, echo=FALSE}
+kable(head(warsaw_queues)) %>% 
+kable_styling(c("striped", "hover", "condensed", "responsive")) %>%
+scroll_box(width = "100%")
+```
 
 ## New function
 
@@ -67,29 +81,23 @@ append_api_data_to_csv(filename)
 
 ## Model
 
-TO DO
 
 
 ## Example {.smaller}
 
-Let's assume, that you would like to file an application for 500+ programme in municipal office in Bielany in Warsaw. You wish to find out the average time you need to wait and the amount of people already waiting.
+Where the service time is the longest?
 
-``` {r, eval=FALSE}
-library(kolejkeR)
-library(stringi)
-
-offices <- get_available_offices()
-
-# Find out the exact name of the office
-Bielany_office <- offices[stri_detect_fixed(offices, "Bielany")][1]
-queues <- get_available_queues(Bielany_office)
-
-# Find the exact name of the queue
-queue500 <- queues[stri_detect_fixed(queues, "500+")][1]
-
-print(get_waiting_time_verbose(Bielany_office, queue500, language = 'pl'))
-print(get_number_of_people_verbose(Bielany_office, queue500, language = "pl"))
-
+``` {r plot_example, echo=FALSE}
+select(warsaw_queues, name, czasObslugi) %>%
+  group_by(name) %>%
+  summarise(mean_time = mean(czasObslugi)) %>%
+  ggplot(aes(x=name, y=mean_time)) +
+  geom_col() +
+  xlab("Office") +
+  ylab("Mean time [min]") +
+  labs(title = "Mean waiting time for offices in Warsaw") +
+  coord_flip() +
+  theme_classic()
 ```
-Now you can go to the municipal office with a big smile on your face.
+
 
