@@ -34,3 +34,13 @@ AppVeyor
 api
 csv
 ShinyApps
+Nr
+httptest  
+jsonlite  
+knitr     
+labelled
+nr      
+queuers 
+rmarkdown 
+stringr   
+testthat

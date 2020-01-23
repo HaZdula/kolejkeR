@@ -229,3 +229,4 @@ append_api_data_to_csv <- function(filename) {
   queue_data <- get_all_data_with_time()
   utils::write.table(queue_data, filename, sep = ",", col.names = !file.exists(filename), append = T, row.names = FALSE)
 }
+

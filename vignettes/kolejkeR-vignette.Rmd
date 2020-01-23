@@ -14,6 +14,331 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = FALSE
 )
+knitr::opts_chunk$set(fig.width=10, fig.height=6) 
+library(ggplot2)
+library(dplyr)
+library(rlang)
+library(tidyr)
+library(hms)
+library(ggrepel)
+library(pals)
+library(kolejkeR)
+data("warsaw_queues")
+data <-warsaw_queues
+
+
+
+dates <- data %>% select(date) %>% group_by(date) %>% summarise(n())
+
+data[['date_time_posix']]<- as.POSIXct(strptime(paste(data[['time']], data[['date']]), format="%H:%M %Y-%m-%d", tz="Europe/Warsaw"))
+data[['time_posix']] <- as.POSIXct(strptime(data[['time']], format="%H:%M", tz="Europe/Warsaw"))
+
+parse_served_number <- function(queuer_token_col) {
+  as.numeric(gsub("[[:alpha:]](\\d*)", "\\1", queuer_token_col, perl=TRUE))
+}
+
+data_with_queuers_count <- data %>%
+  mutate(served_people=replace_na(parse_served_number(aktualnyNumer),0)) %>%
+  mutate(week_day = factor(weekdays(date_time_posix), 
+                           #levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+                           levels = c("poniedziałek", "wtorek", "środa", "czwartek", "piątek")
+                          ))  
+
+open_queues_preprocessed_data <- data_with_queuers_count %>% filter(liczbaCzynnychStan > 0 & status == 1 )
+
+
+# Avg nr of served people per day
+plot_avg_served_people_per_day <- function() {
+  open_queues_preprocessed_data %>% 
+    group_by(name, date) %>% 
+    summarise(all_served_people = max(served_people)) %>% 
+    group_by(name) %>% 
+    summarise(`Mean daily nr of served people` = mean(all_served_people)) %>% 
+    arrange(desc(`Mean daily nr of served people`)) %>%
+    mutate(Office=reorder(name, `Mean daily nr of served people`)) %>% 
+    ggplot(aes(x = Office, y = `Mean daily nr of served people`)) +
+    geom_col() + coord_flip() + theme_bw()
+}
+# Avg nr of people in queue per day
+plot_avg_queue_len <- function() {
+  open_queues_preprocessed_data %>% 
+    group_by(name, date) %>% 
+    summarise(avg_queue_len = mean(liczbaKlwKolejce)) %>% 
+    group_by(name) %>% 
+    summarise(`Mean daily queue length` = mean(avg_queue_len)) %>% 
+    #summarise(avg_queue_len_per_day = mean(liczbaKlwKolejce)) %>% 
+    mutate(Office=reorder(name, `Mean daily queue length`)) %>% 
+    ggplot(aes(x = Office, y = `Mean daily queue length`)) +
+    geom_col() + coord_flip() + theme_bw()
+}
+
+
+common_week_data <- data_with_queuers_count %>% 
+  filter(date_time_posix > as.POSIXct(strptime("2020-01-07", format="%Y-%m-%d", tz="Europe/Warsaw")) &
+          date_time_posix < as.POSIXct(strptime("2020-01-20", format="%Y-%m-%d", tz="Europe/Warsaw"))) 
+plot_common_week_data <- function() {
+  
+  
+  common_week_data %>% 
+    filter(liczbaCzynnychStan > 0) %>%  # filters out days that offices doesn't work
+    mutate(`Day of weeek` = week_day) %>% 
+    group_by(`Day of weeek`) %>% 
+    summarise(`Mean queue length` = mean(liczbaKlwKolejce)) %>% 
+    ggplot(aes(x = `Day of weeek`, y = `Mean queue length`)) +
+    geom_col() +
+    theme_bw() +
+    theme( axis.text.x = element_text(angle=45, hjust = 1))
+}
+
+plot_served_people_office_queue <- function() {
+  jitter_served_people <- data_with_queuers_count %>% 
+    filter(liczbaCzynnychStan > 0 & status == 1 ) %>% # filters out days that offices doesn't work
+    group_by(name, nazwaGrupy, date) %>% 
+    summarise(all_served_people = max(served_people)) %>% 
+    group_by(name, nazwaGrupy) %>% 
+    summarise(`Mean daily nr of served people` = mean(all_served_people)) %>% 
+    mutate(Office = name)
+  
+  pos = position_jitter(width = 0.5, seed = 1)
+  ggplot(jitter_served_people, aes(x = Office, y = `Mean daily nr of served people`, color=name)) +
+    geom_point(position = pos ) +
+    geom_text_repel(
+      aes(label=ifelse(`Mean daily nr of served people` > 250, as.character(nazwaGrupy), '')),
+      box.padding   = 0.35, 
+      point.padding = 0.5,
+      segment.color = 'grey50',
+      position = pos ) +
+    theme_bw() +
+    scale_colour_manual(values = cols25(n=21)) +
+    theme(axis.text.x = element_text(angle = 45, 
+                                     hjust = 1),
+          legend.position = "none")
+}
+
+# Avg nr of people in queue per day
+plot_queue_len_office_queue <- function() {
+  jitter_queue_len <- data_with_queuers_count %>% 
+    filter(liczbaCzynnychStan != 0) %>% # filters out days that offices doesn't work
+    group_by(name, nazwaGrupy, date) %>% 
+    summarise(all_queued_people = mean(liczbaKlwKolejce)) %>% 
+    group_by(name, nazwaGrupy) %>% 
+    summarise(`Mean queue length` = mean(all_queued_people))
+  
+  pos = position_jitter(width = 0.5, seed = 2)
+  ggplot(jitter_queue_len, aes(x = name, y = `Mean queue length`, color=name)) +
+    geom_point(position = pos ) +
+    geom_text_repel(
+      aes(label=ifelse(`Mean queue length` > 7, as.character(nazwaGrupy), '')),
+      box.padding   = 0.35, 
+      point.padding = 0.5,
+      segment.color = 'grey50',
+      position = pos ) +
+    theme_bw() +
+    scale_colour_manual(values = cols25(n=21)) +
+    theme(axis.text.x = element_text(angle = 45, 
+                                     hjust = 1),
+          legend.position = "none")
+}
+
+office_queues_ids <- open_queues_preprocessed_data %>%
+  group_by(name, nazwaGrupy, idGrupy, date) %>%
+  summarise(n = n(), served = max(served_people), mean_queuers = mean(liczbaKlwKolejce)) %>% 
+  arrange(desc(mean_queuers))
+queue_efficiency_map <- function() {
+  
+  pos = position_jitter(width = 0.5, seed = 3)
+  office_queues_ids %>% mutate(`Mean queue length` = mean_queuers, `Served people per day` = served, Office = name) %>% 
+    ggplot(aes(x = `Served people per day`, y = `Mean queue length`, color = Office)) +
+    geom_point() +
+    geom_text_repel(
+      aes(label=ifelse(mean_queuers > 50, as.character(nazwaGrupy), '')),
+      box.padding   = 0.35, 
+      point.padding = 0.5,
+      segment.color = 'grey50',
+      position = pos )+
+    theme_bw() +
+    scale_colour_manual(values = cols25(n=21))
+}
+
+
+office_queue_data_prepare <- function (data, office_name, queue_id) {
+   data %>% 
+    filter(idGrupy == queue_id & 
+             name == office_name & 
+             liczbaCzynnychStan != 0) %>% 
+    mutate(Time = time_posix,
+           `Served people` = served_people,
+           `Queue length` = liczbaKlwKolejce)
+}
+
+mokotow_658_queue <- office_queue_data_prepare(common_week_data, "UD_Mokotow_1", "658")
+#UD_Praga_Poludnie	Rejestracja pojazdów - składanie wniosków	165	2020-01-08	127	167	29.779528
+praga_poludnie_165_queue <- office_queue_data_prepare(common_week_data, "UD_Praga_Poludnie", "165")
+
+wrap_plot_queues <- function(office_data, y_var) {
+  office_data %>% ggplot(aes(x=Time, y=!!enquo(y_var), color=date)) +
+    geom_point() +
+    scale_x_datetime() +
+    scale_colour_ordinal() +
+    theme_bw() +
+    ggtitle(label = office_data[1, "name"], subtitle = office_data[1, "nazwaGrupy"])
+}
+# Graph showing how nr of served people grows for different time slots and dates
+wrap_plot_queues(mokotow_658_queue, 
+                 `Served people`)
+
+# Graph showing how nr of queued people changes for different time slots and dates
+wrap_plot_queues(mokotow_658_queue, 
+                 `Queue length`)
+
+wrap_plot_queues(praga_poludnie_165_queue, 
+                 `Served people`)
+
+# Graph showing how nr of queued people changes for different time slots and dates
+wrap_plot_queues(praga_poludnie_165_queue, 
+                 `Queue length`)
+
+mokotow_10_00 <- data_with_queuers_count %>%
+  filter(name == "UD_Mokotow_1" & time == "10:00")
+
+mokotow_10_00 
+
+queues_for_12_00_grp <- data_with_queuers_count %>% filter(time == "12:00" & liczbaCzynnychStan > 0) %>%  
+  pivot_longer(cols=c(liczbaCzynnychStan, liczbaKlwKolejce), names_to = "Type", values_to= "Count") %>% 
+  mutate(Count = ifelse(Type == "liczbaCzynnychStan", -Count, Count)) %>% 
+  group_by(name, nazwaGrupy)
+
+queues_for_12_00_grp %>% filter(name == "UD_Mokotow_1") %>%  
+  ggplot(aes(x = nazwaGrupy, y = Count, fill = Type)) +
+  geom_bar(stat = "identity", width = .6) +
+  coord_flip()
+
+
+
+
+plot_wait_time_per_timeslot <- function(queue_data, office_name, queue_id, date_str) {
+  
+  mokotow_queue_with_served_number <- queue_data %>% filter(name == office_name)
+  
+  data_with_slot_nr <- mokotow_queue_with_served_number %>%
+    group_by(date, idGrupy ) %>%
+    arrange(time) %>%
+    mutate(slot_nr=row_number(), next_slot_nr=row_number()+1) %>%
+    ungroup()
+  
+  mokotow_x_with_slot_nr <- data_with_slot_nr %>%  
+    filter(idGrupy  == queue_id & date == date_str & liczbaCzynnychStan > 0)
+  
+  if (all(mokotow_x_with_slot_nr[["liczbaKlwKolejce"]] == 0)) 
+    stop("Error no people in the queue!")
+  
+  if (all(mokotow_x_with_slot_nr$served_people == 0)) 
+    stop("Error no people served in the queue!")
+  
+  mokotow_x_with_slot_time_limits <- mokotow_x_with_slot_nr %>%
+    inner_join(data_with_slot_nr, 
+               data_with_slot_nr, 
+               by=c("next_slot_nr"="slot_nr", "date"="date", "literaGrupy"="literaGrupy")) %>% 
+    mutate(slot_visitor_number_start = liczbaKlwKolejce.x + served_people.x,
+           slot_visitor_number_end = liczbaKlwKolejce.y + served_people.y) %>% 
+    select(time.x, time.y, slot_nr, next_slot_nr, slot_visitor_number_start,
+           slot_visitor_number_end, served_people.x, served_people.y, liczbaKlwKolejce.x,
+           liczbaKlwKolejce.y, time_posix.x, time_posix.y, liczbaCzynnychStan.x) %>% 
+    rename(slot_start = time.x,
+           slot_end = time.y,
+           slot = slot_nr,
+           next_slot = next_slot_nr,
+           start_last_queuer_nr = slot_visitor_number_start,
+           end_last_queuer_nr = slot_visitor_number_end,
+           start_served_nr = served_people.x, 
+           end_served_nr = served_people.y,
+           start_queue_length = liczbaKlwKolejce.x, 
+           end_queue_length = liczbaKlwKolejce.y,
+           start_time = time_posix.x,
+           end_time = time_posix.y, 
+           active_lines_count = liczbaCzynnychStan.x
+           )
+  #browser()
+  
+  mokotow_x_self_cross_joined <- mokotow_x_with_slot_time_limits %>%
+    mutate(dummy = TRUE) %>%
+    inner_join(mokotow_x_with_slot_time_limits %>% mutate(dummy = TRUE),
+               by = c("dummy" = "dummy")) %>% 
+    select(-dummy) 
+  
+  
+  # .x
+  #        end_last_queuer_nr
+  #came    |            |          |
+  #     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  #served|    |                       |      
+  #           end_served_nr            
+  
+  
+  # .y
+  #
+  #came    |            |          |
+  #     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  #served|    |                       |      
+  
+  # y - serverd
+  # x - queued
+  
+  # any person that enqueued in given slot.x match with slot.y that served any of people enqueued in that slot
+  # start_qued_person < serving_person_start & serving_person_end < end_qued_person |
+  # serving_person_start < end_qued_person < serving_person_end | serving_person_start < start_qued_person < serving_person_end
+  
+  mokotow_x_paired_served_enqueued_slots <- mokotow_x_self_cross_joined %>% filter(
+    start_last_queuer_nr.x < start_served_nr.y & end_served_nr.y < end_last_queuer_nr.x |
+      start_served_nr.y <= end_last_queuer_nr.x & end_last_queuer_nr.x < end_served_nr.y |
+      start_served_nr.y < start_last_queuer_nr.x & start_last_queuer_nr.x <= end_served_nr.y
+    ) 
+  
+  mokotow_x_slots_wait_time <- mokotow_x_paired_served_enqueued_slots %>%
+    filter(start_last_queuer_nr.x < end_last_queuer_nr.x) %>% 
+    mutate(wait_time = as_hms(pmax(start_time.y + (end_time.y - start_time.y)/2 - (start_time.x + (end_time.x - start_time.x)/2), 0)),
+           time_slot = as_hms(start_time.x + (end_time.x - start_time.x)/2),
+           slot_start = as_hms(start_time.x),
+           width = end_time.x - start_time.x)
+    
+  
+  mokotow_x_avg_wait_time <- mokotow_x_slots_wait_time %>% 
+    group_by(time_slot, width) %>%
+    summarise(
+      avg_wait_time=as_hms(mean(wait_time))
+    )
+  
+  slot_even = as.logical(1:nrow(mokotow_x_avg_wait_time)%%2)
+  
+  # Plot showing how long on average people had to wait until getting served
+  mokotow_x_avg_wait_time %>% 
+    mutate(`Time` = time_slot,
+           `Mean waiting time` = avg_wait_time,
+           `Time slot [sec]` = as.numeric(width, "secs")) %>% 
+    ggplot(aes(x = `Time`, 
+               y = `Mean waiting time`,
+               width =`Time slot [sec]`, #as.numeric(mokotow_x_avg_wait_time$width, "secs"),
+               fill=`Time slot [sec]`)) + #as.numeric(mokotow_x_avg_wait_time$width, "secs") )) +
+    geom_bar(stat = "identity" ) +
+    #geom_point() +
+    ggtitle(label = paste(mokotow_x_with_slot_nr[[1, "name"]], mokotow_x_with_slot_nr[[1, "date"]]),
+            subtitle = mokotow_x_with_slot_nr[[1, "nazwaGrupy"]]) +
+    theme_bw()
+}
+
+
+
+
+common_office_queues_ids <- common_week_data %>%
+  group_by(name, nazwaGrupy, idGrupy, date) %>%
+  summarise(n = n(), served = max(served_people), mean_queuers = mean(liczbaKlwKolejce)) %>%
+  arrange(desc(mean_queuers))
+
+#View(common_office_queues_ids)
+#View(office_queues_ids %>% arrange(desc(mean_queuers)))
+
+
+
 ```
 
 
@@ -28,7 +353,8 @@ You can install the development version from
 
 ``` {r installation}
 # install.packages("devtools")
-devtools::install_github("HaZdula/kolejkeR")
+#devtools::install_github("HaZdula/kolejkeR")
+library(kolejkeR)
 ```
 
 ## 2. Get access to data regarding queues in municipal offices in Warsaw
@@ -113,4 +439,128 @@ print(get_number_of_people_verbose(Bielany_office, queue500, language = 'pl'))
 
 ```
 Now you can go to the municipal office with a big smile on your face.
+
+## 8. Dataset
+
+Package function were used to gather data about queues in Warsaw's government offices. Data was collected on the span of couple of weeks from December 28 to January 22.
+Warsaw's office API was called repeatedly every 5 minutes and results appended to csv file. KolejkeR package includes this dataset in a form of a data frame with 830172 rows and 12 variables. Uncompressed csv file with dataset takes 84.3 MB of memory.
+
+## 9. Dataset analysis
+
+Script included to vignettes folder in the package stores some data analysis of the dataset. Libraries used for analysis and plotting graph are added to suggested dependencies. Results of the analysis are presented below.
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_avg_served_people_per_day()
+```
+
+
+Above plot shows how many people are served in Warsaw offices every day on average.
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_avg_queue_len()
+```
+
+
+This graph shows the length of the queues in Warsaw's offices. Office with longest queues on average has very small number of dedicated queues and is the second office in the same district.  
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_common_week_data()
+```
+
+
+Average queue lengths for different weekdays show that on average people tend to go to offices slightly more often on the beginning of the week. That maybe because some offices work longer at the begging of the week and longer working hours draw more people.
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_served_people_office_queue()
+```
+
+
+Number of served people every day depends strongly on the queue objective and office.
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_queue_len_office_queue()
+```
+
+
+On average longest queues are for vehicle registrations.
+
+
+``` {r, echo = FALSE, eval = TRUE}
+queue_efficiency_map()
+```
+
+
+Map queue objective description on mean queue length and average number of served people per day shows efficiency of given serving booths. Despite long queues relatively small number of people is served for vehicle registration and other labelled queues. This indicates processes that take long time to achieve in the offices. 
+
+
+``` {r, echo = FALSE, eval = TRUE}
+# Graph showing how nr of served people grows for different time slots and dates
+wrap_plot_queues(mokotow_658_queue, 
+                 `Served people`)
+```
+
+
+Growth of served people over time for example queue for couple of different dates shows linearity.
+
+
+``` {r, echo = FALSE, eval = TRUE}
+
+# Graph showing how nr of queued people changes for different time slots and dates
+wrap_plot_queues(mokotow_658_queue, 
+                 `Queue length`)
+
+```
+
+
+Changes of queue length for sample queue show more interesting relationships. Queues for this queue were longer in afternoon hours. Monday (2020-01-13) was the most popular weekday. 
+
+
+``` {r, echo = FALSE, eval = TRUE}
+wrap_plot_queues(praga_poludnie_165_queue, 
+                 `Served people`)
+
+```
+
+
+The same graph for vehicle registration show that this process takes much longer to serve single person in the queue.
+
+
+``` {r, echo = FALSE, eval = TRUE}
+# Graph showing how nr of queued people changes for different time slots and dates
+wrap_plot_queues(praga_poludnie_165_queue, 
+                 `Queue length`)
+```
+
+
+For the more popular queue people tend to come mostly before noon.
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Bemowo", "551", "2020-01-13")
+```
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Bielany", "171", "2020-01-13")
+```
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Ochota", "599", "2020-12-30")
+```
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Mokotow_1", "658", "2020-12-30")
+```
+
+
+Plots showing distribution of waiting time for people that come in different hours show that waiting time for serving queuers is non-obvious and traces individual characteristics for different queues.
+This plots were created with assumption that ticket nr indicates how many people were served for given moment and no one is leaving queue before getting ticket and being served. 
+Blank columns indicate that this assumption not always holds. Especially for queues were many serving booths were active ticket nr tends to grow slower than queue length reduction.
 
