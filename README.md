@@ -39,3 +39,13 @@ print(get_number_of_people_verbose(Bielany_office, queue500))
 ```
 Now you can go to the municipal office with a big smile on your face.
 
+## ShinyApp with live data
+
+https://sowiks2711.shinyapps.io/kolejkershiny/
+
+## Source code of golem package
+
+https://github.com/sowiks2711/kolejkeRShiny
+
+
+
