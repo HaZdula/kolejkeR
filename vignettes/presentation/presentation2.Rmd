@@ -16,6 +16,7 @@ library(kableExtra)
 library(knitr)
 library(dplyr)
 library(ggplot2)
+source("../preprocessing.R")
 
 ```
 
@@ -90,5 +91,113 @@ select(warsaw_queues, name, czasObslugi) %>%
   coord_flip() +
   theme_classic()
 ```
+
+## Dataset
+
+Package function were used to gather data about queues in Warsaw's government offices. Data was collected on the span of couple of weeks from December 28 to January 22.
+Warsaw's office API was called repeatedly every 5 minutes and results appended to csv file. KolejkeR package includes this dataset in a form of a data frame with 830172 rows and 12 variables. Uncompressed csv file with dataset takes 84.3 MB of memory.
+
+
+## Plot 1
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_avg_served_people_per_day()
+```
+
+
+
+## Plot 2
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_avg_queue_len()
+```
+
+
+
+## Plot 3
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_common_week_data()
+```
+
+
+## Plot 4
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_served_people_office_queue()
+```
+
+
+
+## Plot 5
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_queue_len_office_queue()
+```
+
+
+
+## Plot 6
+
+
+``` {r, echo = FALSE, eval = TRUE}
+queue_efficiency_map()
+```
+
+
+
+## Plot 7
+
+
+``` {r, echo = FALSE, eval = TRUE}
+# Graph showing how nr of served people grows for different time slots and dates
+wrap_plot_queues(mokotow_658_queue, 
+                 `Served people`)
+```
+
+
+
+## Plot 8
+
+
+``` {r, echo = FALSE, eval = TRUE}
+
+# Graph showing how nr of queued people changes for different time slots and dates
+wrap_plot_queues(mokotow_658_queue, 
+                 `Queue length`)
+
+```
+
+
+## Plot 9
+
+
+``` {r, echo = FALSE, eval = TRUE}
+wrap_plot_queues(praga_poludnie_165_queue, 
+                 `Served people`)
+
+```
+
+
+
+## Plot 10
+
+
+``` {r, echo = FALSE, eval = TRUE}
+# Graph showing how nr of queued people changes for different time slots and dates
+wrap_plot_queues(praga_poludnie_165_queue, 
+                 `Queue length`)
+```
+
+
+
+## Plot 11
+
+
+``` {r, echo = FALSE, eval = TRUE}
+plot_wait_time_per_timeslot(data_with_queuers_count, "UD_Mokotow_1", "658", "2020-12-30")
+```
+
 
 
